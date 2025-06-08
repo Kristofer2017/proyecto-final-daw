@@ -29,12 +29,12 @@
             <input value="{{ $usuario['apellido'] }}" type="text" class="form-control" id="apellido" name="apellido" required>
         </div>
         <div class="mb-3">
-            <label for="correo" class="form-label">Correo</label>
-            <input value="{{ $usuario['correo'] }}" type="email" class="form-control" id="correo" name="correo" required>
+            <label for="email" class="form-label">Correo</label>
+            <input value="{{ $usuario['email'] }}" type="email" class="form-control" id="email" name="email" required>
         </div>
         <div class="mb-3">
             <label for="password" class="form-label">Constraseña</label>
-            <input value="{{ $usuario['contra'] }}" type="password" class="form-control" id="password" name="password" required>
+            <input value="{{ $usuario['password'] }}" type="password" class="form-control" id="password" name="password" required>
         </div>
         <div class="mb-3">
             <label for="estado" class="form-label">Seleccionar estado</label>

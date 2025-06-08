@@ -28,8 +28,8 @@
                 <input type="text" class="form-control" id="apellido" name="apellido" required>
             </div>
             <div class="mb-3">
-                <label for="correo" class="form-label">Correo</label>
-                <input type="email" class="form-control" id="correo" name="correo" required>
+                <label for="email" class="form-label">Correo</label>
+                <input type="email" class="form-control" id="email" name="email" required>
             </div>
             <div class="mb-3">
                 <label for="password" class="form-label">Constraseña</label>

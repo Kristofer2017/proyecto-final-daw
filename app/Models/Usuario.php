@@ -3,8 +3,9 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Foundation\Auth\User as Authenticatable;
 
-class Usuario extends Model
+class Usuario extends Authenticatable
 {
     // Mapeamos la tabla
     protected $table = 'usuarios';
@@ -15,8 +16,8 @@ class Usuario extends Model
         'activo', 
         'nombre', 
         'apellido', 
-        'correo', 
-        'contra', 
+        'email', 
+        'password', 
         'rol_id'
     ];
 
@@ -33,6 +34,10 @@ class Usuario extends Model
         return Usuario::all();
     }
 
+    public function obtenerPorUsuarioId(int $id) {
+        return Usuario::find($id);
+    }
+
     public function actualizar(Usuario $usuario) {
         return $usuario->save();
     }
@@ -41,18 +46,12 @@ class Usuario extends Model
         $usuario = Usuario::find($id);
         return $usuario->delete();
     }
-
-    // Funciones adicionales
-    public function obtenerPorUsuarioId(int $id) {
-        return Usuario::find($id);
+    
+    public function rol() {
+        return $this->belongsTo(Rol::class, 'rol_id', 'rol_id');
     }
 
-    // REVISAR PORQUE LOGIN ES POR CORREO Y NOMBRE
-    public function obtenerPorNombre(string $nombre) {
-        return Usuario::where('nombre', $nombre)->first(); 
-    }
-
-    function obtenerPorNombreYPassword(string $nombre, string $password) {
-        return Usuario::where('nombre', $nombre)->where('password', $password)->first();
+    public function hasRole(string $nombreRol) {
+        return $this->rol->nombre == $nombreRol;
     }
 }

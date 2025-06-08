@@ -17,8 +17,8 @@ return new class extends Migration
             $table->enum('activo', ['Y', 'N']);
             $table->string('nombre',50);
             $table->string('apellido',50);
-            $table->string('correo',100)->unique();
-            $table->string('contra', 100);
+            $table->string('email',100)->unique();
+            $table->string('password', 100);
             $table->unsignedInteger('rol_id');
 
             $table->foreign('rol_id')->references('rol_id')->on('roles');

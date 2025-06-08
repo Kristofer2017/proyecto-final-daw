@@ -41,8 +41,8 @@ class UsuarioController extends Controller
             $usuario->activo = $request->activo;
             $usuario->nombre = $request->nombre;
             $usuario->apellido = $request->apellido;
-            $usuario->correo = $request->correo;
-            $usuario->contra = $request->password;
+            $usuario->email = $request->email;
+            $usuario->password = Hash::make($request->password);
             $usuario->rol_id = $request->rol_id;
 
             $this->usuarioModel->crear($usuario);
@@ -82,8 +82,8 @@ class UsuarioController extends Controller
             $usuario->activo = $request->activo;
             $usuario->nombre = $request->nombre;
             $usuario->apellido = $request->apellido;
-            $usuario->correo = $request->correo;
-            $usuario->contra = $request->password;
+            $usuario->email = $request->email;
+            $usuario->password = Hash::make($request->password);
             $usuario->rol_id = $request->rol_id;
 
             $this->usuarioModel->actualizar($usuario);

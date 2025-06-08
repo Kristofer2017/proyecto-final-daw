@@ -29,7 +29,7 @@
                 <tr>
                     <td>{{ htmlspecialchars($usuario["nombre"]) }}</td>
                     <td>{{ htmlspecialchars($usuario["apellido"]) }}</td>
-                    <td>{{ htmlspecialchars($usuario["correo"]) }}</td>
+                    <td>{{ htmlspecialchars($usuario["email"]) }}</td>
                     <td>{{ htmlspecialchars($usuario["rol_id"]) }}</td>
                     <td>{{ htmlspecialchars($usuario["activo"] == 'Y' ? 'Activo' : 'Inactivo') }}</td>
                     <td>{{ htmlspecialchars($usuario["fecha_creacion"]) }}</td>
