@@ -8,6 +8,7 @@ use App\Models\Rol;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Redirect;
+use Symfony\Component\HttpKernel\Exception\HttpException;
 
 class UsuarioController extends Controller
 {
@@ -39,9 +40,9 @@ class UsuarioController extends Controller
             $usuario->fecha_creacion = now();
             $usuario->activo = $request->activo;
             $usuario->nombre = $request->nombre;
-            $usuario->nombre = $request->apellido;
-            $usuario->nombre = $request->correo;
-            $usuario->password = Hash::make($request->contra);
+            $usuario->apellido = $request->apellido;
+            $usuario->correo = $request->correo;
+            $usuario->contra = $request->password;
             $usuario->rol_id = $request->rol_id;
 
             $this->usuarioModel->crear($usuario);
@@ -50,33 +51,73 @@ class UsuarioController extends Controller
 
             $_SESSION["response"] = [
                 "success" => true,
-                "message" => "Datos guardados"
+                "message" => "Usuario guardado con éxito!"
             ];
 
             return Redirect::route('usuarios.index');
             
         } catch (\Throwable $th) {
-            echo var_dump($th);
+            throw new HttpException(500, 'Error interno del servidor.');
         }
-    }
-
-    public function show(string $id)
-    {
-        //
     }
 
     public function edit(string $id)
     {
-        //
+        try {
+            $roles = $this->rolModel->obtenerTodos();
+            $usuario = $this->usuarioModel->obtenerPorUsuarioId($id);
+
+            return view('/usuarios/editar', ['usuario' => $usuario, 'roles' => $roles]);
+        
+        } catch (\Throwable $th) {
+            throw new HttpException(500, 'Error interno del servidor.');
+        }
     }
 
-    public function update(Request $request, string $id)
+    public function update(Request $request)
     {
-        //
+        try {
+            $usuario = $this->usuarioModel->obtenerPorUsuarioId($request->id);
+
+            $usuario->activo = $request->activo;
+            $usuario->nombre = $request->nombre;
+            $usuario->apellido = $request->apellido;
+            $usuario->correo = $request->correo;
+            $usuario->contra = $request->password;
+            $usuario->rol_id = $request->rol_id;
+
+            $this->usuarioModel->actualizar($usuario);
+
+            session_start();
+
+            $_SESSION["response"] = [
+                "success" => true,
+                "message" => "Usuario actualizado con éxito!"
+            ];
+
+            return Redirect::route('usuarios.index');
+            
+        } catch (\Throwable $th) {
+            throw new HttpException(500, 'Error interno del servidor.');
+        }
     }
 
     public function destroy(string $id)
     {
-        //
+        try {
+            $this->usuarioModel->eliminar($id);
+
+            session_start();
+
+            $_SESSION["response"] = [
+                "success" => true,
+                "message" => "Datos eliminados"
+            ];
+            
+            return Redirect::route('usuarios.index');
+
+        } catch (\Throwable $th) {
+            throw new HttpException(500, 'Error interno del servidor.');
+        }
     }
 }

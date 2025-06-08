@@ -43,15 +43,16 @@ class Usuario extends Model
     }
 
     // Funciones adicionales
-    public function obtenerUsuarioPorUsuarioId(int $id) {
+    public function obtenerPorUsuarioId(int $id) {
         return Usuario::find($id);
     }
 
-    public function obtenerUsuarioPorNombre(string $nombre) {
-        return Usuario::where('nombre', $nombre)->first(); // REVISAR
+    // REVISAR PORQUE LOGIN ES POR CORREO Y NOMBRE
+    public function obtenerPorNombre(string $nombre) {
+        return Usuario::where('nombre', $nombre)->first(); 
     }
 
-    function obtenerUsuarioPorNombreYPassword(string $nombre, string $password) {
+    function obtenerPorNombreYPassword(string $nombre, string $password) {
         return Usuario::where('nombre', $nombre)->where('password', $password)->first();
     }
 }

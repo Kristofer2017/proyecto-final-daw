@@ -21,5 +21,10 @@ Route::get('/roles/editar/{id}', [RolController::class, 'edit']);
 Route::post('/roles/actualizar', [RolController::class, 'update']);
 Route::get('/roles/eliminar/{id}', [RolController::class, 'destroy']);
 
-// Rutas para: Roles
-Route::get('/usuarios', [UsuarioController::class, 'index'])->name('usuarios.index');
+// Rutas para: Usuarios
+Route::get('/usuarios', [UsuarioController::class, 'index'] )->name('usuarios.index');
+Route::get('/usuarios/crear', [UsuarioController::class, 'create']);
+Route::post('/usuarios/guardar', [UsuarioController::class, 'store']);
+Route::get('/usuarios/editar/{id}', [UsuarioController::class, 'edit']);
+Route::post('/usuarios/actualizar', [UsuarioController::class, 'update']);
+Route::get('/usuarios/eliminar/{id}', [UsuarioController::class, 'destroy']);

@@ -11,6 +11,8 @@
 
     <title>SB Admin 2 - Blank</title>
 
+    @vite(['resources/sass/app.scss', 'resources/js/app.js'])
+
     <!-- Custom fonts for this template-->
     <link href="{{ asset('/') }}sbadmin2/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
     <link

@@ -21,12 +21,20 @@
             </select>
         </div>
         <div class="mb-3">
-            <label for="nombre" class="form-label">Nombre usuario</label>
-            <input value="{{ $usuario['nombre'] }}" type="text" class="form-control" id="rol" name="nombre" required>
+            <label for="nombre" class="form-label">Nombre</label>
+            <input value="{{ $usuario['nombre'] }}" type="text" class="form-control" id="nombre" name="nombre" required>
+        </div>
+        <div class="mb-3">
+            <label for="apellido" class="form-label">Apellido</label>
+            <input value="{{ $usuario['apellido'] }}" type="text" class="form-control" id="apellido" name="apellido" required>
+        </div>
+        <div class="mb-3">
+            <label for="correo" class="form-label">Correo</label>
+            <input value="{{ $usuario['correo'] }}" type="email" class="form-control" id="correo" name="correo" required>
         </div>
         <div class="mb-3">
             <label for="password" class="form-label">Constraseña</label>
-            <input value="{{ $usuario['password'] }}" type="password" class="form-control" id="rol" name="password" required>
+            <input value="{{ $usuario['contra'] }}" type="password" class="form-control" id="password" name="password" required>
         </div>
         <div class="mb-3">
             <label for="estado" class="form-label">Seleccionar estado</label>
@@ -35,7 +43,12 @@
                 <option {{ $usuario["activo"] == "N" ? "selected" : "" }} value="N">Inactivo</option>
             </select>
         </div>
-        <button type="submit" class="btn btn-primary">Actualizar</button>
+        <button type="submit" class="btn btn-primary btn-icon-split">
+            <span class="icon text-white-50">
+                <i class="fas fa-check"></i>
+            </span>
+            <span class="text">Actualizar</span>
+        </button>
     </form>
     </div>
 </div>

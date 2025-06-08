@@ -27,25 +27,35 @@
 
     <!-- Nav Item - Pages Collapse Menu -->
     <li class="nav-item">
-        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo"
-            aria-expanded="true" aria-controls="collapseTwo">
+        <a class="nav-link {{ request()->is('roles*') ? '' : 'collapsed' }}" href="#" data-toggle="collapse" data-target="#collapsePages"
+            aria-expanded="{{ request()->is('roles*') ? 'true' : 'false' }}" aria-controls="collapsePages">
             <i class="fas fa-fw fa-cog"></i>
             <span>Mantenimiento</span>
         </a>
-        <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+        <div id="collapsePages" class="collapse {{ request()->is('roles*') ? 'show' : '' }}" aria-labelledby="headingPages" data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
                 <h6 class="collapse-header">Mantenimiento</h6>
                 <a class="collapse-item {{ request()->is('roles*') ? 'active' : '' }}" href="/roles">Roles</a>
-                <a class="collapse-item {{ request()->is('usuarios*') ? 'active' : '' }}" href="/usuarios">Usuarios</a>
-                <a class="collapse-item" href="/pacientes">Pacientes</a>
-                <a class="collapse-item" href="/doctores">Doctores</a>
+                
             </div>
         </div>
     </li>
 
+    <li class="nav-item">
+        <a class="nav-link {{ request()->is('usuarios*') ? '' : 'collapsed' }}" href="#" data-toggle="collapse" data-target="#collapsePages"
+            aria-expanded="{{ request()->is('usuarios*') ? 'true' : 'false' }}" aria-controls="collapsePages">
+            <i class="fas fa-fw fa-cog"></i>
+            <span>Mantenimiento</span>
+        </a>
+        <div id="collapsePages" class="collapse {{ request()->is('usuarios*') ? 'show' : '' }}" aria-labelledby="headingPages" data-parent="#accordionSidebar">
+            <div class="bg-white py-2 collapse-inner rounded">
+                <h6 class="collapse-header">Mantenimiento</h6>
+   
+                <a class="collapse-item {{ request()->is('usuarios*') ? 'active' : '' }}" href="/usuarios">Usuarios</a>
+            </div>
+        </div>
+    </li>
     
-
-    <!-- Divider -->
     <hr class="sidebar-divider d-none d-md-block">
 
     <!-- Sidebar Toggler (Sidebar) -->
