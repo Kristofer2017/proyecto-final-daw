@@ -5,23 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login</title>
 
-    <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
-    <link href="{{ asset('/') }}sbadmin2/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
-    <link href="{{ asset('/') }}sbadmin2/css/sb-admin-2.min.css" rel="stylesheet">
-    <style>
-        .bg-login-image img  {
-            width: 100%;
-        }
-        .bg-login-image {
-            background: #a6a9c4;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding-top: 4em;
-        }
-    </style>
+    @vite(['resources/sass/app.scss', 'resources/js/app.js'])
+    @include('partials.styles')
 </head>
-
 <body class="bg-gradient-primary">
     <div class="container">
         <div class="row justify-content-center">
@@ -30,7 +16,7 @@
                     <div class="card-body p-0">
                         <div class="row" >
                             <div class="col-lg-6 d-none d-lg-block bg-login-image">
-                                <img src="/imagenes/logo.png" alt="banner">
+                                {{-- <img src="" alt="banner"> --}}
                             </div>
                             <div class="col-lg-6">
                                 <div class="p-5">
@@ -41,13 +27,11 @@
                                         @csrf
                                         <div class="form-group">
                                             <input type="email" class="form-control form-control-user"
-                                                id="email" placeholder="Correo electrónico"
-                                                name="email" required>
+                                                id="email" placeholder="Correo electrónico" name="email" required>
                                         </div>
                                         <div class="form-group">
                                             <input type="password" class="form-control form-control-user"
-                                                id="password" placeholder="Contraseña"
-                                                name="password" required>
+                                                id="password" placeholder="Contraseña" name="password" required>
                                         </div>
                                         <div class="form-group">
                                             <div class="custom-control custom-checkbox small">
@@ -57,10 +41,7 @@
                                         </div>
                                         <button type="submit" class="btn btn-primary btn-user btn-block">Iniciar sesion</button>
                                         <hr>
-                                        <a href="" class="btn btn-google btn-user btn-block">
-                                            Crear Cuenta
-                                        </a>
-                                        
+                                        <a href="" class="btn btn-google btn-user btn-block">Crear Cuenta</a>
                                     </form>
                                     <hr>
                                     <div class="text-center">
@@ -74,16 +55,10 @@
                         </div>
                     </div>
                 </div>
-
             </div>
-
         </div>
-
     </div>
 
-    <script src="{{ asset('/') }}sbadmin2/vendor/jquery/jquery.min.js"></script>
-    <script src="{{ asset('/') }}sbadmin2/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-    <script src="{{ asset('/') }}sbadmin2/vendor/jquery-easing/jquery.easing.min.js"></script>
-    <script src="{{ asset('/') }}sbadmin2/js/sb-admin-2.min.js"></script>
+    @include('partials.scripts')
 </body>
 </html>

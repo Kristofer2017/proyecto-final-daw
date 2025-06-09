@@ -35,8 +35,8 @@
             @endforeach
         </tbody>
     </table>
+    </div>
 </div>
-
 <script>
     function confirmar(id) {
         Swal.fire({
