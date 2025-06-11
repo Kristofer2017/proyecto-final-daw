@@ -22,12 +22,12 @@ class Usuario extends Authenticatable
     ];
 
     protected $attributes = [
-        'activo' => 'N' // Valor por defecto
+        'activo' => 'Y' // Valor por defecto
     ];
 
-    // CRUD
     public function crear(Usuario $usuario) {
-        return $usuario->save();
+        $usuario->save();
+        return $usuario;
     }
 
     public function obtenerTodos() {
@@ -53,5 +53,15 @@ class Usuario extends Authenticatable
 
     public function hasRole(string $nombreRol) {
         return $this->rol->nombre == $nombreRol;
+    }
+
+    public function perfilPaciente()
+    {
+        return $this->hasOne(PerfilPaciente::class, 'usuario_id');
+    }
+
+    public function perfilDoctor()
+    {
+        return $this->hasOne(PerfilDoctor::class, 'usuario_id');
     }
 }

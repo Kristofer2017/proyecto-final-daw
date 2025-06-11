@@ -6,7 +6,7 @@
 
     <!-- Topbar Search -->
     
-    <span class="ml-3">Bienvenido, {{ Auth::user()->nombre }} {{ Auth::user()->apellido }}!</span>
+    <span class="ml-3">Bienvenido, {{ Auth::user()->nombre }} {{ Auth::user()->apellido }}! fecha nac: {{ Auth::user()->perfilPaciente->fecha_nacimiento }} y rol: {{ Auth::user()->rol->nombre }}</span>
 
     <!-- Topbar Navbar -->
     <ul class="navbar-nav ml-auto">

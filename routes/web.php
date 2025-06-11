@@ -1,18 +1,22 @@
 <?php
 
 use App\Http\Controllers\LoginController;
+use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\RolController;
 use App\Http\Controllers\UsuarioController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return redirect('/usuarios');
-});
+})->name('home');
 
 // Rutas para: Login
 Route::get('/auth/login', [LoginController::class, 'index'])->name('login');
 Route::post('/auth/login', [LoginController::class, 'login']);
 Route::post('/auth/logout', [LoginController::class, 'logout']);
+
+Route::get('/auth/registro', [RegisterController::class, 'index'])->name('register');
+Route::post('/auth/register', [RegisterController::class, 'register']);
 
 // Rutas para: Roles
 Route::get('/roles', [RolController::class, 'index'])->name('roles.index')->middleware('auth');

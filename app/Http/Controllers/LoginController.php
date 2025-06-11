@@ -30,7 +30,7 @@ class LoginController extends Controller
                 return back()->with('error', 'Credenciales incorrectas');
             }
         } catch (\Throwable $th) {
-            echo var_dump($th);
+            throw new HttpException(500, 'Error interno del servidor.');
         }
     }
 
