@@ -3,9 +3,13 @@
 @section('content')
 
 <div class="card shadow mb-4">
-    <div class="card-header py-3">
+    <div class="card-header py-3 d-flex justify-content-between align-items-center">
         <h6 class="m-0 font-weight-bold text-primary">Listado de usuarios</h6>
-        <a class="btn btn-primary" role="button" aria-disabled="true" href="/usuarios/crear">Nuevo usuario</a>
+        <a class="btn btn-primary btn-icon-split" role="button" aria-disabled="true" href="/usuarios/crear">
+            
+            <span class="icon text-white-50"><i class="fas fa-plus"></i></span>
+            <span class="text">Nuevo usuario</span>
+        </a>
     </div>
     <div class="card-body">
         <div class="table-responsive">
@@ -52,7 +56,7 @@
 
     function confirmar(id) {
         Swal.fire({
-            title: "Esta seguro de eliminar el dato?",
+            title: "¿Esta seguro de eliminar el dato?",
             showCancelButton: true,
             confirmButtonText: "Eliminar",
             cancelButtonText: `No`

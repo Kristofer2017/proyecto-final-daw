@@ -6,7 +6,6 @@ use Illuminate\Database\Eloquent\Model;
 
 class PerfilPaciente extends Model
 {
-    // Mapeamos la tabla
     protected $table = 'perfil_pacientes';
     protected $primaryKey = 'paciente_id';
     public $timestamps = false;
@@ -34,8 +33,13 @@ class PerfilPaciente extends Model
         return $paciente->delete();
     }
     
-    public function user()
-    {
-        return $this->belongsTo(Usuario::class);
+    // Relación 1:1 con paciente - un paciente solo puede tener un perfil de usuario
+    public function usuario() {
+        return $this->belongsTo(Usuario::class, 'usuario_id');
+    }
+
+    // Relación 1:N con citas - un paciente puede tener muchas citas
+    public function citas() {
+        return $this->hasMany(Cita::class, 'paciente_id');
     }
 }

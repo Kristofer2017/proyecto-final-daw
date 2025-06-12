@@ -21,7 +21,7 @@
                     <div class="card-body p-0">
                         <div class="row" >
                             <div class="col-lg-6 d-none d-lg-block bg-login-image">
-                                {{-- <img src="" alt="banner"> --}}
+                                {{-- <img src="/imagenes/L1.png" alt="banner"> --}}
                             </div>
                             <div class="col-lg-6">
                                 <div class="p-5">

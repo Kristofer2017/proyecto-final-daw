@@ -38,11 +38,11 @@
     <div class="form-group row">
         <div class="col-sm-6 mb-3 mb-sm-0">
             <input type="password" class="form-control form-control-user"
-                placeholder="Contraseña" id="password" name="password" required>
+                placeholder="Contraseña" id="password" name="password" required onChange="onChange()">
         </div>
         <div class="col-sm-6">
             <input type="password" class="form-control form-control-user"
-                placeholder="Repetir Contraseña" id="password_confirmation" name="password_confirmation" required>
+                placeholder="Repetir Contraseña" id="password_confirmation" name="password_confirmation" required onChange="onChange()">
         </div>
     </div>
     <div class="form-group text-center">
@@ -58,12 +58,13 @@
     <div class="form-group row text-center">
         <label for="rol" class="form-label text-gray-800 my-3">Numero y fecha de nacimiento</label>
         <div class="col-sm-6 mb-3 mb-sm-0">
-            <input type="text" class="form-control form-control-user"
-                placeholder="Numero de Teléfono" id="telefono" name="telefono" required>
+            <input type="tel" class="form-control form-control-user"
+                placeholder="Numero de Teléfono" id="telefono" name="telefono" required
+                pattern="[0-9]{4}-[0-9]{4}" data-mask="0000-0000">
         </div>
         <div class="col-sm-6">
             <input type="date" class="form-control form-control-user"
-                placeholder="Repetir Contraseña" id="fecha_nacimiento" name="fecha_nacimiento" required>
+                placeholder="Fecha de nacimiento" id="fecha_nacimiento" name="fecha_nacimiento" required>
         </div>
     </div>
     <hr>
@@ -80,3 +81,17 @@
 </div>
 
 @endsection
+
+@push('js')
+    <script>
+        function onChange() {
+            const password = document.getElementById('password');
+            const confirm = document.getElementById('password_confirmation');
+            if (confirm.value === password.value) {
+                confirm.setCustomValidity('');
+            } else {
+                confirm.setCustomValidity('La contraseña no coincide');
+            }
+        }
+    </script>
+@endpush

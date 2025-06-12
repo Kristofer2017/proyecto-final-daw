@@ -15,7 +15,7 @@ class PacientesSeeder extends Seeder
     {
         PerfilPaciente::create([
             'fecha_nacimiento' => '1999-01-01',
-            'telefono' => '70152020',
+            'telefono' => '7015-2020',
             'usuario_id' => 1
         ]);
     }

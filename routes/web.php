@@ -4,6 +4,7 @@ use App\Http\Controllers\LoginController;
 use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\RolController;
 use App\Http\Controllers\UsuarioController;
+use App\Http\Controllers\CitaController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -33,3 +34,8 @@ Route::post('/usuarios/guardar', [UsuarioController::class, 'store'])->middlewar
 Route::get('/usuarios/editar/{id}', [UsuarioController::class, 'edit'])->middleware('auth');
 Route::post('/usuarios/actualizar', [UsuarioController::class, 'update'])->middleware('auth');
 Route::get('/usuarios/eliminar/{id}', [UsuarioController::class, 'destroy'])->middleware('auth');
+
+// Rutas para: Citas
+Route::get('/citas', [CitaController::class, 'index'] )->name('citas.index')->middleware('auth');
+Route::get('/citas/crear', [CitaController::class, 'create'] )->middleware('auth');
+Route::post('/citas/guardar', [CitaController::class, 'store'] )->middleware('auth');

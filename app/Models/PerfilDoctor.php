@@ -35,8 +35,13 @@ class PerfilDoctor extends Model
         return $doctor->delete();
     }
     
-    public function user()
-    {
-        return $this->belongsTo(Usuario::class);
+    // Relación 1:1 con doctor - un doctor solo puede tener un perfil de usuario
+    public function usuario() {
+        return $this->belongsTo(Usuario::class, 'usuario_id');
+    }
+
+    // Relación 1:N con citas - un doctor puede tener muchas citas
+    public function citas() {
+        return $this->hasMany(Cita::class, 'doctor_id');
     }
 }
