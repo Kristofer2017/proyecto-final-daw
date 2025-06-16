@@ -7,7 +7,6 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 
 class Usuario extends Authenticatable
 {
-    // Mapeamos la tabla
     protected $table = 'usuarios';
     protected $primaryKey = 'usuario_id';
     public $timestamps = false;
@@ -21,9 +20,7 @@ class Usuario extends Authenticatable
         'rol_id'
     ];
 
-    protected $attributes = [
-        'activo' => 'Y' // Valor por defecto
-    ];
+    protected $attributes = [ 'activo' => 'Y' ];
 
     public function crear(Usuario $usuario) {
         $usuario->save();
@@ -51,8 +48,8 @@ class Usuario extends Authenticatable
         return $this->belongsTo(Rol::class, 'rol_id', 'rol_id');
     }
 
-    public function hasRole(string $nombreRol) {
-        return $this->rol->nombre == $nombreRol;
+    public function esDoctor() {
+        return $this->rol->nombre == "Doctor";
     }
 
     public function perfilPaciente()

@@ -2,9 +2,9 @@
     
     <a class="sidebar-brand d-flex align-items-center justify-content-center" href="/">
         <div class="sidebar-brand-icon">
-            <img src="/imagenes/logo2.png" alt="banner">
+            <img src="/imagenes/logo4.png" alt="banner">
         </div>
-        <div class="sidebar-brand-text ml-1 mr-2">Medi Lourdes</div>
+        <div class="sidebar-brand-text">Clinica Lourdes</div>
     </a>
 
     <hr class="sidebar-divider my-0">
@@ -32,6 +32,7 @@
                 <h6 class="collapse-header">Mant. Disponibles</h6>
                 <a class="collapse-item" href="/usuarios">Usuarios</a>
                 <a class="collapse-item" href="/roles">Roles</a>
+                <a class="collapse-item" href="/admin-seguros">Seguros</a>
             </div>
         </div>
     </li>

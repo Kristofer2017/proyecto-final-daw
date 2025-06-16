@@ -35,6 +35,31 @@
   box-sizing: border-box;
 }
 
+tbody td {
+  line-height: 2.3rem !important;
+}
+
+.form-container {
+  padding: 2rem 5rem 2.5rem;
+}
+
+.sidebar .sidebar-brand {
+  height: 5.5rem;
+  text-decoration: none;
+  font-size: 1rem;
+  font-weight: 800;
+  padding: 1.7rem 1.4rem 1.5rem;
+  text-align: center;
+  text-transform: uppercase;
+  letter-spacing: 0.06rem;
+  z-index: 1;
+  width: 95%;
+}
+
+.sidebar .sidebar-brand .sidebar-brand-icon img {
+  width: 3.7rem;
+}
+
 html {
   font-family: sans-serif;
   line-height: 1.15;
@@ -10434,21 +10459,6 @@ a:focus {
 
 .sidebar.toggled .sidebar-card {
   display: none;
-}
-
-.sidebar .sidebar-brand {
-  height: 5.5rem;
-  text-decoration: none;
-  font-size: 1rem;
-  font-weight: 800;
-  padding: 1.7rem 1rem 1.5rem;
-  text-align: center;
-  letter-spacing: 0.05rem;
-  z-index: 1;
-}
-
-.sidebar .sidebar-brand .sidebar-brand-icon img {
-  width: 4rem;
 }
 
 .sidebar .sidebar-brand .sidebar-brand-text {

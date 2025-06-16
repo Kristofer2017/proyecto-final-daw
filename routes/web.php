@@ -5,6 +5,7 @@ use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\RolController;
 use App\Http\Controllers\UsuarioController;
 use App\Http\Controllers\CitaController;
+use App\Http\Controllers\PerfilController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -19,6 +20,10 @@ Route::post('/auth/logout', [LoginController::class, 'logout']);
 Route::get('/auth/registro', [RegisterController::class, 'index'])->name('register');
 Route::post('/auth/register', [RegisterController::class, 'register']);
 
+// Rutas para: Perfil
+Route::get('/perfil', [PerfilController::class, 'index'])->name('perfil.index')->middleware('auth');
+Route::get('/perfil/actualizar', [PerfilController::class, 'update'])->middleware('auth');
+
 // Rutas para: Roles
 Route::get('/roles', [RolController::class, 'index'])->name('roles.index')->middleware('auth');
 Route::get('/roles/crear', [RolController::class, 'create'])->middleware('auth');
@@ -28,7 +33,7 @@ Route::post('/roles/actualizar', [RolController::class, 'update'])->middleware('
 Route::get('/roles/eliminar/{id}', [RolController::class, 'destroy'])->middleware('auth');
 
 // Rutas para: Usuarios
-Route::get('/usuarios', [UsuarioController::class, 'index'] )->name('usuarios.index')->middleware('auth');
+Route::get('/usuarios', [UsuarioController::class, 'index'] )->name('usuarios.index')->middleware(['auth', 'rol']);
 Route::get('/usuarios/crear', [UsuarioController::class, 'create'])->middleware('auth');
 Route::post('/usuarios/guardar', [UsuarioController::class, 'store'])->middleware('auth');
 Route::get('/usuarios/editar/{id}', [UsuarioController::class, 'edit'])->middleware('auth');

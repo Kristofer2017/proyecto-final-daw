@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+use App\Models\PerfilDoctor;
 use App\Models\PerfilPaciente;
 use App\Models\Rol;
 use App\Models\Usuario;
@@ -17,11 +18,13 @@ class RegisterController extends Controller
     private $rolModel;
     private $usuarioModel;
     private $pacienteModel;
+    private $doctorModel;
 
     public function __construct() {
         $this->rolModel = new Rol();
         $this->usuarioModel = new Usuario();
         $this->pacienteModel = new PerfilPaciente();
+        $this->doctorModel = new PerfilDoctor();
     }
 
     public function index() {
@@ -30,10 +33,7 @@ class RegisterController extends Controller
     }
 
     public function register(Request $request) {
-        $request->validate([
-            'password' => 'confirmed|min:4',
-            'telefono' => 'max:10',
-        ]);
+        
 
         try {
             $usuario = new Usuario();
@@ -46,17 +46,28 @@ class RegisterController extends Controller
 
             $usuarioCreado = $this->usuarioModel->crear($usuario);
 
-            $paciente = new PerfilPaciente();
-            $paciente->fecha_nacimiento = $request->fecha_nacimiento;
-            $paciente->telefono = $request->telefono;
-            $paciente->usuario_id = $usuarioCreado->usuario_id;
+            if($request->rol_id == 2){
+                $doctor = new PerfilDoctor();
+                $doctor->licencia = $request->licencia;
+                $doctor->especialidad = $request->especialidad;
+                $doctor->ubicacion = $request->ubicacion;
+                $doctor->usuario_id = $usuarioCreado->usuario_id;
 
-            $this->pacienteModel->crear($paciente);
+                $this->doctorModel->crear($doctor);
+            }else{
+                $paciente = new PerfilPaciente();
+                $paciente->fecha_nacimiento = $request->fecha_nacimiento;
+                $paciente->telefono = $request->telefono;
+                $paciente->usuario_id = $usuarioCreado->usuario_id;
+
+                $this->pacienteModel->crear($paciente);
+            }
+            
 
             return redirect()->route('login')->with('success', 'Registro realizado correctamente');
 
         } catch (\Throwable $th) {
-            throw new HttpException(500, 'Error interno del servidor.');
+            return Redirect::back()->with('error', 'Error: ' . $th->getMessage());
         }
     }
 }

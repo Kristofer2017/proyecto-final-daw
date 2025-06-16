@@ -7,7 +7,7 @@
         <h6 class="m-0 font-weight-bold text-primary">Agendar nueva cita</h6>
     </div>
     <div class="card-body">
-        <form action="/citas/guardar" method="post" class="form-container">
+        <form action="/citas/guardar" method="post" class="px-5 pt-3 pb-4">
             @csrf
             <div class="mb-3">
                 <label for="doctor" class="form-label">Seleccionar el doctor</label>
