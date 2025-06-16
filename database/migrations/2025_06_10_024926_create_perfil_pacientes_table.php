@@ -11,7 +11,7 @@ return new class extends Migration
         Schema::create('perfil_pacientes', function (Blueprint $table) {
             $table->increments('paciente_id');
             $table->date('fecha_nacimiento');
-            $table->string('telefono',10);
+            $table->string('telefono',9);
             $table->unsignedInteger('usuario_id');
 
             $table->foreign('usuario_id')->references('usuario_id')->on('usuarios')->onDelete('cascade');

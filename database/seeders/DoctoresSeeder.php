@@ -14,7 +14,7 @@ class DoctoresSeeder extends Seeder
     public function run(): void
     {
         PerfilDoctor::create([
-            'licencia' => '1045307870',
+            'licencia' => '104-530-7870',
             'especialidad' => 'Odontología',
             'ubicacion' => '4ta. Avenida Norte N.4, Santa Tecla, El Salvador',
             'usuario_id' => 2

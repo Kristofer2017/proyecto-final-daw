@@ -10,7 +10,7 @@ return new class extends Migration
     {
         Schema::create('perfil_doctores', function (Blueprint $table) {
             $table->increments('doctor_id');
-            $table->string('licencia',10);
+            $table->string('licencia',12);
             $table->string('especialidad',50);
             $table->string('ubicacion',200);
             $table->unsignedInteger('usuario_id');
