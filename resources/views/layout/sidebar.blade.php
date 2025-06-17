@@ -32,7 +32,7 @@
                 <h6 class="collapse-header">Mant. Disponibles</h6>
                 <a class="collapse-item" href="/usuarios">Usuarios</a>
                 <a class="collapse-item" href="/roles">Roles</a>
-                <a class="collapse-item" href="/admin-seguros">Seguros</a>
+                <a class="collapse-item" href="/seguros">Seguros</a>
             </div>
         </div>
     </li>

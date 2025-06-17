@@ -39,7 +39,7 @@
         lengthMenu: [5, 10, 20, { label: 'All', value: -1 }]
     });
 
-    function confirmar(id) {
+    function confirmar(id, tabla) {
         Swal.fire({
             title: "¿Esta seguro de eliminar el dato?",
             showCancelButton: true,
@@ -48,7 +48,7 @@
             }).then((result) => {
             
                 if(result.isConfirmed) {
-                    location.href = "/usuarios/eliminar/" + id;
+                    location.href = "/"+tabla+"/eliminar/"+id;
                 }
         });
     }
