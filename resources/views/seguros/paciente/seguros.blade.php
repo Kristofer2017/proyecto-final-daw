@@ -20,8 +20,7 @@
                         <th scope="col">Tipo de plan</th>
                         <th scope="col">Numero de Seguro</th>
                         <th scope="col">Estado</th>
-                        
-                        <th scope="col" class="text-center">Acciones</th>
+                        <th scope="col">Acciones</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -33,8 +32,7 @@
                             <td>{{ htmlspecialchars($seguro->pivot["numero_seguro"]) }}</td>
                             <td>{{ htmlspecialchars($seguro->pivot["activo"] == 'Y' ? 'Activo' : 'Inactivo') }}</td>
                             
-
-                            <td class="d-flex gap-3 justify-content-center">
+                            <td>
                                 <a class="btn btn-danger btn-icon-split" role="button" aria-disabled="true" onclick="confirmar({{ $seguro['seguro_id'] }}, 'seguros')">
                                     <span class="icon text-white-50"><i class="fa-solid fa-trash"></i></span>
                                     <span class="text">Eliminar</span>

@@ -10,22 +10,34 @@
         <form action="/seguros/guardar" method="post">
             @csrf
             <div class="mb-3">
-                <label for="nombre" class="form-label">Aseguradora</label>
-                <input type="text" class="form-control" id="nombre" name="nombre" required>
+                <label for="seguro_id" class="form-label">Selecciona aseguradora</label>
+                <select id="seguro_id" name="seguro_id" class="form-select">
+                    @foreach($seguros as $seguro)
+                        @if($seguro['activo'] == 'Y')
+                            <option value="{{ $seguro['seguro_id'] }}">{{ $seguro['nombre'] }}</option>
+                        @endif
+                    @endforeach
+                </select>
             </div>
 
             <div class="mb-3">
-                <label for="telefono" class="form-label">Teléfono</label>
-                <input type="text" class="form-control" id="telefono" name="telefono" pattern="[0-9]{4}-[0-9]{4}" data-mask="0000-0000" >
+                <label for="numero_seguro" class="form-label">Numero de su seguro</label>
+                <input type="text" class="form-control" id="numero_seguro" name="numero_seguro" required>
+            </div>
+
+            <div class="mb-3">
+                <label for="tipo_plan" class="form-label">Nombre del plan</label>
+                <input type="text" class="form-control" id="tipo_plan" name="tipo_plan" required>
             </div>
             
             <div class="mb-3">
-                <label for="estado" class="form-label">Seleccionar estado</label>
+                <label for="estado" class="form-label">Estado con aseguradora</label>
                 <select id="estado" name="activo" class="form-select" aria-label="Default select example">
                     <option value="Y">Activo</option>
                     <option value="N">Inactivo</option>
                 </select>
             </div>
+
             <a href="/seguros" class="btn btn-danger btn-icon-split mr-2">
                 <span class="icon text-white-50"><i class="fa-solid fa-xmark"></i></span>
                 <span class="text">Cancelar</span>

@@ -30,6 +30,10 @@ class Cita extends Model
         return Cita::all();
     }
 
+    public function obtenerPorCitaId(int $id) {
+        return Cita::find($id);
+    }
+
     public function actualizar(Cita $cita) {
         return $cita->save();
     }

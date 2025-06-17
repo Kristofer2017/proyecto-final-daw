@@ -48,7 +48,6 @@
                 <h6 class="collapse-header">Mi expediente</h6>
                 <a class="collapse-item" href="/citas">Citas</a>
                 <a class="collapse-item" href="/seguros">Seguros</a>
-                <a class="collapse-item" href="/roles">Diagnosticos</a>
             </div>
         </div>
     </li>

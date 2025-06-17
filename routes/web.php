@@ -50,6 +50,7 @@ Route::get('/usuarios/eliminar/{id}', [UsuarioController::class, 'destroy'])->mi
 Route::get('/citas', [CitaController::class, 'index'] )->name('citas.index')->middleware('auth');
 Route::get('/citas/crear', [CitaController::class, 'create'] )->middleware('auth');
 Route::post('/citas/guardar', [CitaController::class, 'store'] )->middleware('auth');
+Route::get('/citas/cancelar/{id}', [CitaController::class, 'cancel'] )->middleware('auth');
 
 // Rutas para: Seguros
 Route::get('/seguros', [SeguroController::class, 'index'] )->name('seguros.index')->middleware('auth');

@@ -34,20 +34,33 @@ class SeguroController extends Controller
         if($this->esDoctor) {
             return view('seguros.doctor.crear');
         }
+        $seguros = $this->seguroModel->obtenertodos();
+        return view('seguros.paciente.crear', ['seguros' => $seguros]);
     }
 
     public function store(Request $request)
     {
         try {
-            $seguro = new Seguro();
+            if($this->esDoctor) {
+                $seguro = new Seguro();
 
-            $seguro->fecha_creacion = now();
-            $seguro->activo = $request->activo;
-            $seguro->nombre = $request->nombre;
-            $seguro->telefono = $request->telefono;
+                $seguro->fecha_creacion = now();
+                $seguro->activo = $request->activo;
+                $seguro->nombre = $request->nombre;
+                $seguro->telefono = $request->telefono;
+                
+
+                $this->seguroModel->crear($seguro);
+            } else {
+                $paciente = Auth::user()->perfilPaciente;
+
+                $paciente->seguros()->attach($request->seguro_id, [
+                    'tipo_plan' => $request->tipo_plan,
+                    'numero_seguro' => $request->numero_seguro,
+                    'activo' => $request->activo,
+                ]);
+            }
             
-
-            $this->seguroModel->crear($seguro);
 
             return redirect()->route('seguros.index')->with('success', 'Seguro fué guardado correctamente!');
             

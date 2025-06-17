@@ -38,6 +38,12 @@ class CitaController extends Controller
     public function store(Request $request)
     {
         try {
+            $conflicto = $this->validarConflicto($request);
+
+            if ($conflicto) {
+                return redirect()->back()->with('error', 'Ya existe una cita programada con este doctor en ese horario.');
+            }
+
             $cita = new Cita();
             $cita->notas = $request->notas;
             $cita->doctor_id = $request->doctor;
@@ -46,19 +52,45 @@ class CitaController extends Controller
 
             $this->citaModel->crear($cita);
 
-            session_start();
-
-            $_SESSION["response"] = [
-                "success" => true,
-                "message" => "Cita agendada con éxito!"
-            ];
-
-            return Redirect::route('citas.index');
+            
+            return redirect()->route('citas.index')->with('success', 'Cita agendada con éxito!');
             
         } catch (\Throwable $th) {
-            dd($request->all(), Carbon::parse($request->fecha_programada)->format('Y-m-d H:i:s'),Auth::user()->perfilPaciente->paciente_id);
-            
-            //return Redirect::back()->with('error', 'Error al agendar la cita.');
+            return Redirect::back()->with('error', 'Error al agendar la cita.');
         }
+    }
+
+    public function cancel(string $id)
+    {
+        try {
+            $cita = $this->citaModel->obtenerPorCitaId($id);
+
+            $cita->estado = 'Cancelada';
+
+            $this->citaModel->actualizar($cita);
+
+            return redirect()->route('citas.index')->with('success', 'La cita fue cancelada exitosamente.');
+
+        } catch (\Throwable $th) {
+            return redirect()->back()->with('error', 'Error al cancelar cita');
+        }
+    }
+
+    public function validarConflicto($request){
+        $inicio = Carbon::parse($request->fecha_programada);
+        $fin = $inicio->copy()->addMinutes(30);
+
+        $conflicto = Cita::where('doctor_id', $request->doctor)
+            ->whereNotIn('estado', ['Cancelada', 'Completada'])
+            ->where(function ($query) use ($inicio, $fin) {
+                $query->whereBetween('fecha_programada', [$inicio, $fin])
+                    ->orWhere(function ($q) use ($inicio, $fin) {
+                        // Por si otra cita empieza antes pero invade el bloque
+                        $q->where('fecha_programada', '<', $inicio)
+                            ->whereRaw('DATE_ADD(fecha_programada, INTERVAL 30 MINUTE) > ?', [$inicio]);
+                    });
+            })->exists();
+
+        return $conflicto;
     }
 }

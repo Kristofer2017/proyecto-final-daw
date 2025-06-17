@@ -12,7 +12,7 @@
     </div>
     <div class="card-body">
         <div class="table-responsive">
-            <table class="table table-striped dataTable" id="dataTable">
+            <table class="table table-striped dataTable">
                 <thead>
                     <tr>
                         <th scope="col">Fecha y hora</th>
@@ -26,12 +26,18 @@
                     @foreach($citas as $cita)
                         <tr>
                             <td>{{ htmlspecialchars($cita["fecha_programada"]) }}</td>
-                            <td>{{ htmlspecialchars($cita["doctor_id"]) }}</td>
+                            <td>{{ htmlspecialchars($cita->doctor->usuario->nombre) }}</td>
                             <td>{{ htmlspecialchars($cita["notas"]) }}</td>
                             <td>{{ htmlspecialchars($cita["estado"]) }}</td>
                             <td>
-                                <a class="btn btn-danger" role="button" aria-disabled="true" onclick="confirmar({{ $cita['cita_id'] }})">Cancelar</a>
-                                <a href="/usuarios/editar/{{ $cita['cita_id'] }}" class="btn btn-warning" role="button" aria-disabled="true">Reagendar</a>
+                                <a class="btn btn-danger btn-icon-split {{ $cita->estado == 'Cancelada' ? 'disabled' : '' }}" onclick="confirmar({{ $cita['cita_id'] }})">
+                                    <span class="icon text-white-50"><i class="fa-solid fa-xmark"></i></span>
+                                    <span class="text">Cancelar</span>
+                                </a>
+                                <a href="/usuarios/editar/{{ $cita['cita_id'] }}" class="btn btn-warning btn-icon-split {{ $cita->estado == 'Cancelada' ? 'disabled' : '' }}">
+                                    <span class="icon text-white-50"><i class="fa-regular fa-calendar-check"></i></span>
+                                    <span class="text">Reagendar</span>
+                                </a>
                             </td>
                         </tr>
                     @endforeach
@@ -51,12 +57,12 @@
         Swal.fire({
             title: "¿Esta seguro de cancelar esta cita?",
             showCancelButton: true,
-            confirmButtonText: "Eliminar",
+            confirmButtonText: "Confirmar",
             cancelButtonText: `No`
             }).then((result) => {
             
                 if(result.isConfirmed) {
-                    location.href = "/usuarios/eliminar/" + id;
+                    location.href = "/citas/cancelar/" + id;
                 }
         });
     }
