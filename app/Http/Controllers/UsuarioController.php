@@ -47,17 +47,10 @@ class UsuarioController extends Controller
 
             $this->usuarioModel->crear($usuario);
 
-            session_start();
-
-            $_SESSION["response"] = [
-                "success" => true,
-                "message" => "Usuario guardado con éxito!"
-            ];
-
-            return Redirect::route('usuarios.index');
+            return redirect()->route('usuarios.index')->with('success', 'Usuario guardado con éxito!');
             
         } catch (\Throwable $th) {
-            throw new HttpException(500, 'Error interno del servidor.');
+            return redirect()->back()->with('error', 'Error al guardar usuario');
         }
     }
 
@@ -67,7 +60,7 @@ class UsuarioController extends Controller
             $roles = $this->rolModel->obtenerTodos();
             $usuario = $this->usuarioModel->obtenerPorUsuarioId($id);
 
-            return view('/usuarios/editar', ['usuario' => $usuario, 'roles' => $roles]);
+            return view('usuarios.editar', ['usuario' => $usuario, 'roles' => $roles]);
         
         } catch (\Throwable $th) {
             throw new HttpException(500, 'Error interno del servidor.');
@@ -88,17 +81,10 @@ class UsuarioController extends Controller
 
             $this->usuarioModel->actualizar($usuario);
 
-            session_start();
-
-            $_SESSION["response"] = [
-                "success" => true,
-                "message" => "Usuario actualizado con éxito!"
-            ];
-
-            return Redirect::route('usuarios.index');
+            return redirect()->route('usuarios.index')->with('success', 'Usuario actualizado con éxito!');
             
         } catch (\Throwable $th) {
-            throw new HttpException(500, 'Error interno del servidor.');
+            return redirect()->back()->with('error', 'Error al actualizar usuario');
         }
     }
 
@@ -107,17 +93,10 @@ class UsuarioController extends Controller
         try {
             $this->usuarioModel->eliminar($id);
 
-            session_start();
-
-            $_SESSION["response"] = [
-                "success" => true,
-                "message" => "Datos eliminados"
-            ];
-            
-            return Redirect::route('usuarios.index');
+            return redirect()->route('usuarios.index')->with('success', 'Datos Eliminados');
 
         } catch (\Throwable $th) {
-            throw new HttpException(500, 'Error interno del servidor.');
+            return redirect()->back()->with('error', 'Error al eliminar dato');
         }
     }
 }

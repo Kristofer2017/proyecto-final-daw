@@ -24,15 +24,14 @@ class CitaController extends Controller
     public function index()
     {
         $citas = Auth::user()->perfilPaciente->citas;
-        return view('/citas/citas', ['citas' => $citas]);
+        return view('.citas.citas', ['citas' => $citas]);
     }
 
     public function create()
     {
-        // Retorna el perfil del doctor, para obtener el usuario será desde la vista
         $doctores = $this->doctorModel->obtenerTodos();
 
-        return view('/citas/crear', ['doctores' => $doctores]);
+        return view('citas.crear', ['doctores' => $doctores]);
     }
 
     public function store(Request $request)
@@ -46,7 +45,7 @@ class CitaController extends Controller
 
             $cita = new Cita();
             $cita->notas = $request->notas;
-            $cita->doctor_id = $request->doctor;
+            $cita->doctor_id = $request->doctor_id;
             $cita->fecha_programada = Carbon::parse($request->fecha_programada)->format('Y-m-d H:i:s');
             $cita->paciente_id = Auth::user()->perfilPaciente->paciente_id;
 
@@ -56,7 +55,42 @@ class CitaController extends Controller
             return redirect()->route('citas.index')->with('success', 'Cita agendada con éxito!');
             
         } catch (\Throwable $th) {
-            return Redirect::back()->with('error', 'Error al agendar la cita.');
+            return redirect()->back()->with('error', 'Error al agendar la cita.');
+        }
+    }
+
+    public function edit(string $id)
+    {
+        try {
+            // Retorna el perfil del doctor, para obtener el usuario será desde la vista
+            $doctores = $this->doctorModel->obtenerTodos();
+            $cita = $this->citaModel->obtenerPorCitaId($id);
+
+            return view('citas.editar', ['doctores' => $doctores, 'cita' => $cita]);
+        } catch (\Throwable $th) {
+            throw new HttpException(500, 'Error interno del servidor.');
+        }
+    }
+
+    public function update(Request $request)
+    {
+        try {
+            $conflicto = $this->validarConflicto($request);
+
+            if ($conflicto) {
+                return redirect()->back()->with('error', 'Ya existe una cita programada con este doctor en ese horario.');
+            }
+            $cita = $this->citaModel->obtenerPorCitaId($request->id);
+            $cita->notas = $request->notas;
+            $cita->doctor_id = $request->doctor_id;
+            $cita->fecha_programada = Carbon::parse($request->fecha_programada)->format('Y-m-d H:i:s');
+            
+            $this->citaModel->actualizar($cita);
+            
+            return redirect()->route('citas.index')->with('success', 'Su cita ha sido reprogramada');
+            
+        } catch (\Throwable $th) {
+            return redirect()->back()->with('error', 'Error al reprogramar la cita.');
         }
     }
 
@@ -80,7 +114,7 @@ class CitaController extends Controller
         $inicio = Carbon::parse($request->fecha_programada);
         $fin = $inicio->copy()->addMinutes(30);
 
-        $conflicto = Cita::where('doctor_id', $request->doctor)
+        $conflicto = Cita::where('doctor_id', $request->doctor_id)
             ->whereNotIn('estado', ['Cancelada', 'Completada'])
             ->where(function ($query) use ($inicio, $fin) {
                 $query->whereBetween('fecha_programada', [$inicio, $fin])

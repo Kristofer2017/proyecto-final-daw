@@ -52,13 +52,11 @@ class Usuario extends Authenticatable
         return $this->rol->nombre == "Doctor";
     }
 
-    public function perfilPaciente()
-    {
+    public function perfilPaciente() {
         return $this->hasOne(PerfilPaciente::class, 'usuario_id');
     }
 
-    public function perfilDoctor()
-    {
+    public function perfilDoctor() {
         return $this->hasOne(PerfilDoctor::class, 'usuario_id');
     }
 }
