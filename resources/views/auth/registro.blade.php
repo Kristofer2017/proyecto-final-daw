@@ -95,7 +95,7 @@
 </form>
 <hr>
 <div class="text-center">
-    <a class="small" href="#">Recuperar contraseña</a>
+    <a class="small" href="/auth/reset">Recuperar contraseña</a>
 </div>
 <div class="text-center">
     <a class="small" href="/auth/login">Iniciar Sesión</a>
@@ -105,14 +105,6 @@
 
 @push('js')
     <script>
-        @if (session('error'))
-            Swal.fire({
-                icon: 'error',
-                title: '¡Error!',
-                text: '{{ session('error') }}'
-            });
-        @endif
-
         const password = document.getElementById('password');
         const confirm = document.getElementById('password_confirmation');
         const contenedor = document.getElementById('imputs-adicionales');

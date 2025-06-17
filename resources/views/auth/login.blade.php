@@ -27,30 +27,10 @@
 </form>
 <hr>
 <div class="text-center">
-    <a class="small" href="#">Recuperar contraseña</a>
+    <a class="small" href="/auth/reset">Recuperar contraseña</a>
 </div>
 <div class="text-center">
     <a class="small" href="/auth/registro">Crea una cuenta</a>
 </div>
 
 @endsection
-
-@push('js')
-
-<script>
-    @if (session('success'))
-        Swal.fire({
-            icon: 'success',
-            title: '¡Éxito!',
-            text: '{{ session('success') }}'
-        });
-    @elseif (session('error'))
-        Swal.fire({
-            icon: 'error',
-            title: '¡Error!',
-            text: '{{ session('error') }}'
-        });
-    @endif
-</script>
-
-@endpush

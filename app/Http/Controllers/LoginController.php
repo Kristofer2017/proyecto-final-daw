@@ -13,6 +13,11 @@ class LoginController extends Controller
     public function index() {
         return view('/auth/login');
     }
+
+    // Pagina para cambiar contraseña
+    public function reset() {
+        return view('/auth/reset');
+    }
     
     public function login(Request $request) {
         try {
@@ -24,7 +29,7 @@ class LoginController extends Controller
             if (Auth::attempt($credenciales)) {
                 $request->session()->regenerate();
 
-                return redirect()->intended('/roles');
+                return redirect()->intended('/');
                 
             } else {
                 return back()->with('error', 'Credenciales incorrectas');
@@ -41,7 +46,7 @@ class LoginController extends Controller
             $request->session()->invalidate();
             $request->session()->regenerateToken();
 
-            return redirect('/auth/login');
+            return redirect()->route('login');
 
         } catch (\Throwable $th) {
             throw new HttpException(500, 'Error interno del servidor.');

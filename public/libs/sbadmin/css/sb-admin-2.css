@@ -35,8 +35,12 @@
   box-sizing: border-box;
 }
 
+table {
+  border: 1px solid #e3e6f0;
+}
+
 tbody td {
-  line-height: 2.3rem !important;
+  line-height: 2.35rem !important;
 }
 
 .form-container {
@@ -1498,7 +1502,7 @@ pre code {
 .table {
   width: 100%;
   margin-bottom: 1rem;
-  color: #858796;
+  color: #858796;  
 }
 
 .table th,

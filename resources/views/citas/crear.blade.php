@@ -1,5 +1,15 @@
 @extends('layout.app')
 
+@push('css')
+<style>
+    input#fecha_programada {
+        display: inline;
+        width: 12rem;
+        margin-left: 1rem;
+    }
+</style>
+@endpush
+
 @section('content')
 
 <div class="card shadow mb-4">
@@ -20,10 +30,8 @@
                 </select>
             </div>
             <div class="mb-3">
-                <label for="nombre" class="form-label">Selecciona la fecha y la hora</label>
-                
-                <input type="datetime-local" class="form-control"
-                placeholder="Fecha y Hora" id="fecha_programada" name="fecha_programada" required>
+                <label for="nombre" class="form-label">Selecciona la fecha y la hora: </label>
+                <input type="text" id="fecha_programada" name="fecha_programada" class="form-control" placeholder="Seleccionar..." required>
             </div>
             <div class="mb-3">
                 <label for="nombre" class="form-label">Notas adicionales</label>
@@ -42,3 +50,35 @@
 </div>
 
 @endsection
+
+@push('js')
+
+<script>
+    function configurarCalnedario(){
+        const doctorId = $('#doctor').value;
+        
+        // Petición AJAX al servidor para obtener fechas ocupadas
+        fetch(`/api/citas/ocupadas/${doctorId}`)
+            .then(response => response.json())
+            .then(data => {
+            const fechasOcupadas = data.map(item => item.fecha_programada);
+
+            flatpickr("#fecha_programada", {
+                enableTime: true,
+                dateFormat: "Y-m-d H:i",
+                minDate: "today",
+                disable: fechasOcupadas.map(fecha => {
+                    return {
+                        from: fecha.from,
+                        to: fecha.to
+                    };
+                })
+            });
+        });
+    }
+    
+    $(document).ready(configurarCalnedario);
+    $('#doctor').on('change', configurarCalnedario);
+</script>
+
+@endpush

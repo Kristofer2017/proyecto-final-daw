@@ -6,14 +6,13 @@
     <div class="card-header py-3 d-flex justify-content-between align-items-center">
         <h6 class="m-0 font-weight-bold text-primary">Listado de usuarios</h6>
         <a class="btn btn-primary btn-icon-split" role="button" aria-disabled="true" href="/usuarios/crear">
-            
             <span class="icon text-white-50"><i class="fas fa-plus"></i></span>
             <span class="text">Nuevo usuario</span>
         </a>
     </div>
     <div class="card-body">
         <div class="table-responsive">
-            <table class="table table-striped" id="dataTable">
+            <table class="table table-striped dataTable">
                 <thead>
                     <tr>
                         <th scope="col">Nombre</th>
@@ -22,7 +21,7 @@
                         <th scope="col">Rol</th>
                         <th scope="col">Estado</th>
                         <th scope="col">Fecha creacion</th>
-                        <th scope="col">Acciones</th>
+                        <th scope="col" class="text-center">Acciones</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -34,9 +33,15 @@
                             <td>{{ htmlspecialchars($usuario["rol_id"]) }}</td>
                             <td>{{ htmlspecialchars($usuario["activo"] == 'Y' ? 'Activo' : 'Inactivo') }}</td>
                             <td>{{ htmlspecialchars($usuario["fecha_creacion"]) }}</td>
-                            <td>
-                                <a class="btn btn-danger" role="button" aria-disabled="true" onclick="confirmar({{ $usuario['usuario_id'] }})">Eliminar</a>
-                                <a href="/usuarios/editar/{{ $usuario['usuario_id'] }}" class="btn btn-warning" role="button" aria-disabled="true">Editar</a>
+                            <td class="d-flex gap-3 justify-content-center">
+                                <a class="btn btn-danger btn-icon-split" role="button" aria-disabled="true" onclick="confirmar({{ $usuario['usuario_id'] }})">
+                                    <span class="icon text-white-50"><i class="fa-solid fa-trash"></i></span>
+                                    <span class="text">Eliminar</span>
+                                </a>
+                                <a href="/usuarios/editar/{{ $usuario['usuario_id'] }}" class="btn btn-warning btn-icon-split" role="button" aria-disabled="true">
+                                    <span class="icon text-white-50"><i class="fa-solid fa-pen"></i></span>
+                                    <span class="text">Editar</span>
+                                </a>
                             </td>
                         </tr>
                     @endforeach
@@ -47,27 +52,3 @@
 </div>
 
 @endsection
-
-
-@push('js')
-
-<script>
-    let table = new DataTable('#dataTable')
-
-    function confirmar(id) {
-        Swal.fire({
-            title: "¿Esta seguro de eliminar el dato?",
-            showCancelButton: true,
-            confirmButtonText: "Eliminar",
-            cancelButtonText: `No`
-            }).then((result) => {
-            
-                if(result.isConfirmed) {
-                    location.href = "/usuarios/eliminar/" + id;
-                }
-        });
-    }
-</script>
-
-@endpush
-

@@ -33,8 +33,6 @@ class RegisterController extends Controller
     }
 
     public function register(Request $request) {
-        
-
         try {
             $usuario = new Usuario();
             $usuario->fecha_creacion = now();
@@ -63,11 +61,14 @@ class RegisterController extends Controller
                 $this->pacienteModel->crear($paciente);
             }
             
-
             return redirect()->route('login')->with('success', 'Registro realizado correctamente');
 
-        } catch (\Throwable $th) {
-            return Redirect::back()->with('error', 'Error: ' . $th->getMessage());
+        } catch (\Illuminate\Database\QueryException $e) {
+            if ($e->getCode() == '23000') { // código SQL para violación de UNIQUE
+                return back()->with('error', 'El correo electrónico ya está registrado.');
+            }
+        }catch (\Throwable $th) {
+            return redirect()->back()->with('error', 'Error al registrar usuario.');
         }
     }
 }

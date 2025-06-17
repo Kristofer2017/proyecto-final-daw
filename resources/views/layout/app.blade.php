@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sistema</title>
+    <title>@yield('title', 'Inicio')</title>
 
     @vite(['resources/sass/app.scss', 'resources/js/app.js'])
     
@@ -15,17 +15,7 @@
 </head>
 <body id="page-top">
     @php
-        session_start();
-        
-        if (isset($_SESSION["response"])) {
-
-            $response = $_SESSION["response"];
-            
-            if ($response["success"]) {
-                echo "<script> Swal.fire('" . $response["message"] . "'); </script>";
-                $_SESSION["response"] = null;
-            }
-        }
+        session_start(); 
     @endphp
 
     <div id="wrapper">

@@ -12,7 +12,7 @@
     </div>
     <div class="card-body">
         <div class="table-responsive">
-            <table class="table table-striped" id="dataTable">
+            <table class="table table-striped dataTable" id="dataTable">
                 <thead>
                     <tr>
                         <th scope="col">Fecha y hora</th>
@@ -47,8 +47,6 @@
 @push('js')
 
 <script>
-    let table = new DataTable('#dataTable')
-
     function confirmar(id) {
         Swal.fire({
             title: "¿Esta seguro de cancelar esta cita?",
