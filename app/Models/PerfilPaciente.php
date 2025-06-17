@@ -42,4 +42,10 @@ class PerfilPaciente extends Model
     public function citas() {
         return $this->hasMany(Cita::class, 'paciente_id');
     }
+
+    // Recuperando todos los seguros del paciente mediante la tabla pivote
+    public function seguros()
+    {
+        return $this->belongsToMany(Seguro::class, 'pacientes_seguros', 'paciente_id', 'seguro_id')->withPivot('activo', 'tipo_plan', 'numero_seguro');
+    }
 }

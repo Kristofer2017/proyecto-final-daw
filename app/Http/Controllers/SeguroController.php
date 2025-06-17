@@ -5,23 +5,35 @@ namespace App\Http\Controllers;
 use App\Models\Seguro;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class SeguroController extends Controller
 {
     private $seguroModel;
+    private $esDoctor;
+
     public function __construct() {
         $this->seguroModel = new Seguro();
+        $this->esDoctor = Auth::user()->rol_id == 2; // Doctor = rol_id 2
     }
 
     public function index()
     {
-        $seguros = $this->seguroModel->obtenertodos();
-        return view('seguros.doctor.seguros', ['seguros' => $seguros]);
+        if($this->esDoctor) {
+            $seguros = $this->seguroModel->obtenertodos();
+            return view('seguros.doctor.seguros', ['seguros' => $seguros]);
+        }
+        $paciente = Auth::user()->perfilPaciente;
+        $seguros = $paciente?->seguros ?? collect();
+
+        return view('seguros.paciente.seguros', ['seguros' => $seguros]);
     }
 
     public function create()
     {
-        return view('seguros.doctor.crear');
+        if($this->esDoctor) {
+            return view('seguros.doctor.crear');
+        }
     }
 
     public function store(Request $request)
