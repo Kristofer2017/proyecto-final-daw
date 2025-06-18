@@ -29,7 +29,8 @@
                             <td>{{ htmlspecialchars($seguro["telefono"]) }}</td>
                             <td>{{ htmlspecialchars($seguro["activo"] == 'Y' ? 'Activo' : 'Inactivo') }}</td>
                             <td>{{ htmlspecialchars($seguro["fecha_creacion"]) }}</td>
-                            <td class="d-flex gap-3 justify-content-center">
+                            
+                            <td class="d-flex justify-content-center gap-3">
                                 <a class="btn btn-danger btn-icon-split" role="button" aria-disabled="true" onclick="confirmar({{ $seguro['seguro_id'] }}, 'seguros')">
                                     <span class="icon text-white-50"><i class="fa-solid fa-trash"></i></span>
                                     <span class="text">Eliminar</span>

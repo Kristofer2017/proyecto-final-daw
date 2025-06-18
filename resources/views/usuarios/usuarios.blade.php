@@ -21,7 +21,7 @@
                         <th scope="col">Rol</th>
                         <th scope="col">Estado</th>
                         <th scope="col">Fecha creacion</th>
-                        <th scope="col" class="text-center">Acciones</th>
+                        <th scope="col">Acciones</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -30,10 +30,11 @@
                             <td>{{ htmlspecialchars($usuario["nombre"]) }}</td>
                             <td>{{ htmlspecialchars($usuario["apellido"]) }}</td>
                             <td>{{ htmlspecialchars($usuario["email"]) }}</td>
-                            <td>{{ htmlspecialchars($usuario["rol_id"]) }}</td>
+                            <td>{{ htmlspecialchars($usuario->rol->nombre) }}</td>
                             <td>{{ htmlspecialchars($usuario["activo"] == 'Y' ? 'Activo' : 'Inactivo') }}</td>
                             <td>{{ htmlspecialchars($usuario["fecha_creacion"]) }}</td>
-                            <td class="d-flex gap-3 justify-content-center">
+
+                            <td class="d-flex justify-content-center gap-3">
                                 <a class="btn btn-danger btn-icon-split" role="button" aria-disabled="true" onclick="confirmar({{ $usuario['usuario_id'] }}, 'usuarios')">
                                     <span class="icon text-white-50"><i class="fa-solid fa-trash"></i></span>
                                     <span class="text">Eliminar</span>

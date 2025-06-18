@@ -34,7 +34,10 @@
 
     {{-- JS para todas las paginas --}}
     @include('partials.scripts')
-
+    
+    <!-- SweetAlert desde sesiones -->
+    @include('partials.alerts')
+    
     {{-- Por si una vista requiere JS adicional --}}
     @stack('js')
 </body>

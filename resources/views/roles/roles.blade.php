@@ -27,7 +27,8 @@
                             <td> {{ $rol["nombre"] }} </td>
                             <td> {{ $rol["activo"] == 'Y' ? 'Activo' : 'Inactivo' }} </td>
                             <td> {{ $rol["fecha_creacion"] }} </td>
-                            <td>
+                            
+                            <td class="d-flex justify-content-center gap-3">
                                 <a class="btn btn-danger btn-icon-split {{ $rol->nombre == "Doctor" ? 'disabled' : '' }}" role="button" aria-disabled="true" onclick="confirmar({{ $rol->rol_id }}, 'roles')">
                                     <span class="icon text-white-50"><i class="fa-solid fa-trash"></i></span>
                                     <span class="text">Eliminar</span>

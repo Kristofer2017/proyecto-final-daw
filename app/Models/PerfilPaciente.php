@@ -44,8 +44,9 @@ class PerfilPaciente extends Model
     }
 
     // Recuperando todos los seguros del paciente mediante la tabla pivote
-    public function seguros()
-    {
-        return $this->belongsToMany(Seguro::class, 'pacientes_seguros', 'paciente_id', 'seguro_id')->withPivot('activo', 'tipo_plan', 'numero_seguro');
+    // Tipo de relación N:N - Un paciente pude tener muchos seguros, y los seguros pueden tener multiples pacientes asociados
+    public function seguros() {
+        return $this->belongsToMany(Seguro::class, 'pacientes_seguros', 'paciente_id', 'seguro_id')
+        ->withPivot('id', 'activo', 'tipo_plan', 'numero_seguro');
     }
 }

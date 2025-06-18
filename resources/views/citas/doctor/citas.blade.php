@@ -1,5 +1,14 @@
 @extends('layout.app')
-@section('title', 'Citas')
+
+@push('css')
+<style>
+    .actions {
+        padding-left: 5.5rem !important;   
+        padding-right: 5.5rem !important;   
+    }
+</style>
+@endpush
+
 @section('content')
 
 <div class="card shadow mb-4">
@@ -16,7 +25,7 @@
                 <thead>
                     <tr>
                         <th scope="col">Fecha y hora</th>
-                        <th scope="col">Doctor</th>
+                        <th scope="col">Paciente</th>
                         <th scope="col">Notas</th>
                         <th scope="col">Estado</th>
                         <th scope="col">Acciones</th>
@@ -26,17 +35,26 @@
                     @foreach($citas as $cita)
                         <tr>
                             <td>{{ htmlspecialchars($cita["fecha_programada"]) }}</td>
-                            <td>{{ htmlspecialchars($cita->doctor->usuario->nombre) }}</td>
+                            <td>{{ htmlspecialchars($cita->paciente->usuario->nombre) }}</td>
                             <td>{{ htmlspecialchars($cita["notas"]) }}</td>
                             <td>{{ htmlspecialchars($cita["estado"]) }}</td>
-                            <td>
-                                <a class="btn btn-danger btn-icon-split {{ $cita->estado == 'Cancelada' ? 'disabled' : '' }}" onclick="confirmar({{ $cita['cita_id'] }})">
-                                    <span class="icon text-white-50"><i class="fa-solid fa-xmark"></i></span>
-                                    <span class="text">Cancelar</span>
+
+                            <td class="d-flex justify-content-center gap-3 actions">
+                                <a class="btn btn-primary btn-circle
+                                {{ $cita->estado == 'Cancelada' || $cita->estado == 'Completada' ? 'disabled' : '' }}"
+                                onclick="confirmar({{ $cita['cita_id'] }}, 'completar')">
+                                    <i class="fas fa-check"></i>
                                 </a>
-                                <a href="/citas/editar/{{ $cita['cita_id'] }}" class="btn btn-warning btn-icon-split {{ $cita->estado == 'Cancelada' ? 'disabled' : '' }}">
-                                    <span class="icon text-white-50"><i class="fa-regular fa-calendar-check"></i></span>
-                                    <span class="text">Reagendar</span>
+                                
+                                <a class="btn btn-danger btn-circle 
+                                {{ $cita->estado == 'Cancelada' || $cita->estado == 'Completada' ? 'disabled' : '' }}" 
+                                onclick="confirmar({{ $cita['cita_id'] }}, 'cancelar')">
+                                    <i class="fa-solid fa-xmark"></i>
+                                </a>
+                                <a class="btn btn-warning btn-circle 
+                                {{ $cita->estado == 'Cancelada' || $cita->estado == 'Completada' ? 'disabled' : '' }}" 
+                                href="/citas/editar/{{ $cita['cita_id'] }}">
+                                    <i class="fa-regular fa-calendar-check"></i>
                                 </a>
                             </td>
                         </tr>
@@ -53,16 +71,16 @@
 @push('js')
 
 <script>
-    function confirmar(id) {
+    function confirmar(id, accion) {
         Swal.fire({
-            title: "¿Esta seguro de cancelar esta cita?",
+            title: "¿Esta seguro de "+accion+" esta cita?",
             showCancelButton: true,
             confirmButtonText: "Confirmar",
             cancelButtonText: `No`
             }).then((result) => {
             
                 if(result.isConfirmed) {
-                    location.href = "/citas/cancelar/" + id;
+                    location.href = "/citas/"+accion+"/" + id;
                 }
         });
     }
