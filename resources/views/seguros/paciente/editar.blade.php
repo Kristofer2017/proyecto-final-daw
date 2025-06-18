@@ -1,5 +1,5 @@
 @extends('layout.app')
-
+@section('title', 'Editar perfil paciente')
 @section('content')
 
 <div class="card shadow mb-4">

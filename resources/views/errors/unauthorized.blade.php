@@ -1,5 +1,5 @@
 @extends('layout.app')
-
+@section('title', 'No autorizado')
 @section('content')
 
 <div class="text-center">
