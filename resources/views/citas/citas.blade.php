@@ -29,7 +29,8 @@
                             <td>{{ htmlspecialchars($cita->doctor->usuario->nombre) }}</td>
                             <td>{{ htmlspecialchars($cita["notas"]) }}</td>
                             <td>{{ htmlspecialchars($cita["estado"]) }}</td>
-                            <td>
+
+                            <td class="d-flex justify-content-center gap-3">
                                 <a class="btn btn-danger btn-icon-split {{ $cita->estado == 'Cancelada' ? 'disabled' : '' }}" onclick="confirmar({{ $cita['cita_id'] }})">
                                     <span class="icon text-white-50"><i class="fa-solid fa-xmark"></i></span>
                                     <span class="text">Cancelar</span>

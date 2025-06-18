@@ -13,6 +13,7 @@ class DatabaseSeeder extends Seeder
             UsuariosSeeder::class,
             PacientesSeeder::class,
             DoctoresSeeder::class,
+            SegurosSeeder::class,
         ]);
         
     }

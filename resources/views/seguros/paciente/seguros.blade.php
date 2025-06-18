@@ -32,12 +32,12 @@
                             <td>{{ htmlspecialchars($seguro->pivot["numero_seguro"]) }}</td>
                             <td>{{ htmlspecialchars($seguro->pivot["activo"] == 'Y' ? 'Activo' : 'Inactivo') }}</td>
                             
-                            <td>
-                                <a class="btn btn-danger btn-icon-split" role="button" aria-disabled="true" onclick="confirmar({{ $seguro['seguro_id'] }}, 'seguros')">
+                            <td class="d-flex justify-content-center gap-3">
+                                <a class="btn btn-danger btn-icon-split" onclick="confirmar({{ $seguro->pivot->id }}, 'seguros')">
                                     <span class="icon text-white-50"><i class="fa-solid fa-trash"></i></span>
                                     <span class="text">Eliminar</span>
                                 </a>
-                                <a href="/seguros/editar/{{ $seguro['seguro_id'] }}" class="btn btn-warning btn-icon-split" role="button" aria-disabled="true">
+                                <a href="/seguros/editar/{{ $seguro->pivot->id }}" class="btn btn-warning btn-icon-split" role="button" aria-disabled="true">
                                     <span class="icon text-white-50"><i class="fa-solid fa-pen"></i></span>
                                     <span class="text">Editar</span>
                                 </a>

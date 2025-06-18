@@ -51,12 +51,6 @@ table thead th:last-child {
   text-align: center;
 }
 
-table tbody td:last-child {
-  display: flex;
-  gap: 1rem;
-  justify-content: center;
-}
-
 .sidebar .sidebar-brand {
   height: 5.5rem;
   text-decoration: none;
