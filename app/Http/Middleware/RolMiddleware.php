@@ -9,16 +9,24 @@ use Symfony\Component\HttpFoundation\Response;
 
 class RolMiddleware
 {
-    public function handle(Request $request, Closure $next): Response
+    public function handle(Request $request, Closure $next, $modo): Response
     {
-        $usuario = Auth::user();
-
-        if ($usuario->rol->nombre === 'Doctor') {
-            return $next($request);
+        if (!Auth::check()) {
+            return redirect('/login');
         }
 
-        return response()->view('errors.unauthorized', [
-            'mensaje' => 'No tienes permiso para acceder a esta sección.'
-        ]);
+        $esAdmin = Auth::user()->rol->nombre == 'Administrador';
+
+        // Modo: permitir solo a administradores
+        if ($modo === 'permitir' && !$esAdmin) {
+            return response()->view('errors.unauthorized', ['mensaje' => 'No tienes permiso para acceder a esta sección.']);
+        }
+
+        // Modo: negar a administradores
+        if ($modo === 'negar' && $esAdmin) {
+            return response()->view('errors.unauthorized', ['mensaje' => 'No tienes permiso para acceder a esta sección.']);
+        }
+
+        return $next($request);
     }
 }

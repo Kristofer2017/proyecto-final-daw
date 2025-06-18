@@ -21,5 +21,11 @@ class RolesSeeder extends Seeder
             'activo' => 'Y',
             'nombre' => 'Doctor',
         ]);
+        
+        Rol::create([
+            'fecha_creacion' => now(),
+            'activo' => 'Y',
+            'nombre' => 'Administrador',
+        ]);
     }
 }

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use App\Models\Cita;
 use App\Models\PerfilDoctor;
+use App\Models\PerfilPaciente;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -14,43 +15,66 @@ use Symfony\Component\HttpKernel\Exception\HttpException;
 class CitaController extends Controller
 {
     private $doctorModel;
+    private $pacienteModel;
     private $citaModel;
+    private $esDoctor;
 
     public function __construct() {
         $this->doctorModel = new PerfilDoctor();
+        $this->pacienteModel = new PerfilPaciente();
         $this->citaModel = new Cita();
+        $this->esDoctor = Auth::user()->rol_id == 2; // Doctor = rol_id 2
     }
 
     public function index()
     {
-        $citas = Auth::user()->perfilPaciente->citas;
-        return view('.citas.citas', ['citas' => $citas]);
+        if($this->esDoctor) {
+            $citas = Auth::user()->perfilDoctor->citas;
+            return view('citas.doctor.citas', ['citas' => $citas]);
+        } else {
+            $citas = Auth::user()->perfilPaciente->citas;
+            return view('citas.paciente.citas', ['citas' => $citas]);
+        }
     }
 
     public function create()
     {
-        $doctores = $this->doctorModel->obtenerTodos();
-
-        return view('citas.crear', ['doctores' => $doctores]);
+        if($this->esDoctor) {
+            $pacientes = $this->pacienteModel->obtenerTodos();
+            return view('citas.doctor.crear', ['pacientes' => $pacientes]);
+        } else {
+            $doctores = $this->doctorModel->obtenerTodos();
+            return view('citas.paciente.crear', ['doctores' => $doctores]);
+        }
     }
 
     public function store(Request $request)
     {
         try {
-            $conflicto = $this->validarConflicto($request);
+            $fecha_programada = Carbon::parse($request->fecha_programada);
+            
+            if($this->esDoctor) {
+                $doctor_id = Auth::user()->perfilDoctor->doctor_id;
+                $paciente_id = $request->paciente_id;
+            } else {
+                $paciente_id = Auth::user()->perfilPaciente->paciente_id;
+                $doctor_id = $request->doctor_id;
+            }
+            
+            $conflicto = $this->validarConflicto($fecha_programada, $doctor_id);
 
             if ($conflicto) {
                 return redirect()->back()->with('error', 'Ya existe una cita programada con este doctor en ese horario.');
             }
 
             $cita = new Cita();
+
+            $cita->doctor_id = $doctor_id;
+            $cita->paciente_id = $paciente_id;
+            $cita->fecha_programada = $fecha_programada;
             $cita->notas = $request->notas;
-            $cita->doctor_id = $request->doctor_id;
-            $cita->fecha_programada = Carbon::parse($request->fecha_programada)->format('Y-m-d H:i:s');
-            $cita->paciente_id = Auth::user()->perfilPaciente->paciente_id;
 
             $this->citaModel->crear($cita);
-
             
             return redirect()->route('citas.index')->with('success', 'Cita agendada con éxito!');
             
@@ -62,28 +86,45 @@ class CitaController extends Controller
     public function edit(string $id)
     {
         try {
-            // Retorna el perfil del doctor, para obtener el usuario será desde la vista
-            $doctores = $this->doctorModel->obtenerTodos();
             $cita = $this->citaModel->obtenerPorCitaId($id);
 
-            return view('citas.editar', ['doctores' => $doctores, 'cita' => $cita]);
+            if($this->esDoctor) {
+                $pacientes = $this->pacienteModel->obtenerTodos();
+                return view('citas.doctor.editar', ['pacientes' => $pacientes, 'cita' => $cita]);
+            } else {
+                $doctores = $this->doctorModel->obtenerTodos();
+                return view('citas.paciente.editar', ['doctores' => $doctores, 'cita' => $cita]);
+            }
         } catch (\Throwable $th) {
-            throw new HttpException(500, 'Error interno del servidor.');
+            return redirect()->back()->with('error', 'Ha ocurrido un error, intenta más tarde.');
         }
     }
 
     public function update(Request $request)
     {
         try {
-            $conflicto = $this->validarConflicto($request);
+            $fecha_programada = Carbon::parse($request->fecha_programada);
+            
+            if($this->esDoctor) {
+                $doctor_id = Auth::user()->perfilDoctor->doctor_id;
+                $paciente_id = $request->paciente_id;
+            } else {
+                $paciente_id = Auth::user()->perfilPaciente->paciente_id;
+                $doctor_id = $request->doctor_id;
+            }
+            
+            $conflicto = $this->validarConflicto($fecha_programada, $doctor_id);
 
             if ($conflicto) {
                 return redirect()->back()->with('error', 'Ya existe una cita programada con este doctor en ese horario.');
             }
+
             $cita = $this->citaModel->obtenerPorCitaId($request->id);
+
+            $cita->doctor_id = $doctor_id;
+            $cita->paciente_id = $paciente_id;
+            $cita->fecha_programada = $fecha_programada;
             $cita->notas = $request->notas;
-            $cita->doctor_id = $request->doctor_id;
-            $cita->fecha_programada = Carbon::parse($request->fecha_programada)->format('Y-m-d H:i:s');
             
             $this->citaModel->actualizar($cita);
             
@@ -110,11 +151,28 @@ class CitaController extends Controller
         }
     }
 
-    public function validarConflicto($request){
-        $inicio = Carbon::parse($request->fecha_programada);
+    public function complete(string $id)
+    {
+        try {
+            if($this->esDoctor) {
+                $cita = $this->citaModel->obtenerPorCitaId($id);
+
+                $cita->estado = 'Completada';
+
+                $this->citaModel->actualizar($cita);
+
+                return redirect()->route('citas.index')->with('success', '¡La cita fue completada!');
+            }
+        } catch (\Throwable $th) {
+            return redirect()->back()->with('error', 'Error al cancelar cita');
+        }
+    }
+
+    public function validarConflicto($fecha_programada, $doctor_id){
+        $inicio = $fecha_programada;
         $fin = $inicio->copy()->addMinutes(30);
 
-        $conflicto = Cita::where('doctor_id', $request->doctor_id)
+        $conflicto = Cita::where('doctor_id', $doctor_id)
             ->whereNotIn('estado', ['Cancelada', 'Completada'])
             ->where(function ($query) use ($inicio, $fin) {
                 $query->whereBetween('fecha_programada', [$inicio, $fin])

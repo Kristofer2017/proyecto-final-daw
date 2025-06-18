@@ -48,8 +48,8 @@ class Usuario extends Authenticatable
         return $this->belongsTo(Rol::class, 'rol_id', 'rol_id');
     }
 
-    public function esDoctor() {
-        return $this->rol->nombre == "Doctor";
+    public function hasRole($rol) {
+        return $this->rol->nombre == $rol;
     }
 
     public function perfilPaciente() {

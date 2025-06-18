@@ -4,7 +4,7 @@
 
 <div class="card shadow mb-4">
     <div class="card-header py-3">
-        <h6 class="m-0 font-weight-bold text-primary">Perfil de Doctor</h6>
+        <h6 class="m-0 font-weight-bold text-primary">Perfil de usuario</h6>
     </div>
     <div class="card-body">
         <form action="/perfil/actualizar" method="post" class="form-container">
