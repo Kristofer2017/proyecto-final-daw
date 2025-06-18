@@ -1,5 +1,5 @@
 @extends('layout.app')
-
+@section('title', 'Editar cita')
 @push('css')
 <style>
     input#fecha_programada {

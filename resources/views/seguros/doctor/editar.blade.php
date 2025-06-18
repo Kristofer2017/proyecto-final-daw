@@ -1,5 +1,5 @@
 @extends('layout.app')
-
+@section('title', 'Editar seguro')
 @section('content')
 
 <div class="card shadow mb-4">
