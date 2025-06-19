@@ -29,11 +29,11 @@
                             <td> {{ $rol["fecha_creacion"] }} </td>
                             
                             <td class="d-flex justify-content-center gap-3">
-                                <a class="btn btn-danger btn-icon-split {{ $rol->nombre == "Doctor" ? 'disabled' : '' }}" role="button" aria-disabled="true" onclick="confirmar({{ $rol->rol_id }}, 'roles')">
+                                <a class="btn btn-danger btn-icon-split {{ $rol->nombre == "Doctor" || $rol->nombre == "Paciente" || $rol->nombre == "Administrador" ? 'disabled' : '' }}" role="button" aria-disabled="true" onclick="confirmar({{ $rol->rol_id }}, 'roles')">
                                     <span class="icon text-white-50"><i class="fa-solid fa-trash"></i></span>
                                     <span class="text">Eliminar</span>
                                 </a>
-                                <a href="/roles/editar/{{ $rol["rol_id"] }}" class="btn btn-warning btn-icon-split {{ $rol->nombre == "Doctor" ? 'disabled' : '' }}" role="button" aria-disabled="true">
+                                <a href="/roles/editar/{{ $rol["rol_id"] }}" class="btn btn-warning btn-icon-split {{ $rol->nombre == "Doctor" || $rol->nombre == "Paciente" || $rol->nombre == "Administrador" ? 'disabled' : '' }}" role="button" aria-disabled="true">
                                     <span class="icon text-white-50"><i class="fa-solid fa-pen"></i></span>
                                     <span class="text">Editar</span>
                                 </a>

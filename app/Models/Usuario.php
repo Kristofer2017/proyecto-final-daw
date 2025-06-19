@@ -36,7 +36,8 @@ class Usuario extends Authenticatable
     }
 
     public function actualizar(Usuario $usuario) {
-        return $usuario->save();
+        $usuario->save();
+        return $usuario;
     }
 
     public function eliminar(int $id) {
