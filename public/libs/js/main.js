@@ -13,6 +13,14 @@ let table = new DataTable('.dataTable', {
     lengthMenu: [5, 10, 20, { label: 'All', value: -1 }]
 });
 
+flatpickr("#fecha_programada", {
+    enableTime: true,
+    dateFormat: "Y-m-d H:i",
+    minDate: "today",
+    defaultDate: null,
+    locale: "es"
+});
+
 function confirmar(id, tabla) {
     Swal.fire({
         title: "¿Esta seguro de eliminar el dato?",
@@ -20,7 +28,6 @@ function confirmar(id, tabla) {
         confirmButtonText: "Eliminar",
         cancelButtonText: `No`
         }).then((result) => {
-        
             if(result.isConfirmed) {
                 location.href = "/"+tabla+"/eliminar/"+id;
             }

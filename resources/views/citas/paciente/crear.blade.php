@@ -1,14 +1,6 @@
 @extends('layout.app')
+
 @section('title', 'Crear cita')
-@push('css')
-<style>
-    input#fecha_programada {
-        display: inline;
-        width: 12rem;
-        margin-left: 1rem;
-    }
-</style>
-@endpush
 
 @section('content')
 
@@ -50,15 +42,3 @@
 </div>
 
 @endsection
-
-@push('js')
-
-<script>
-    flatpickr("#fecha_programada", {
-        enableTime: true,
-        dateFormat: "Y-m-d H:i",
-        minDate: "today"
-    });
-</script>
-
-@endpush

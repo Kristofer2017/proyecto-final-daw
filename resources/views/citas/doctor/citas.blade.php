@@ -1,5 +1,7 @@
 @extends('layout.app')
 
+@section('title', 'Citas')
+
 @push('css')
 <style>
     .actions {

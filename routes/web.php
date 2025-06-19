@@ -7,6 +7,7 @@ use App\Http\Controllers\UsuarioController;
 use App\Http\Controllers\CitaController;
 use App\Http\Controllers\DoctoresController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\PacientesController;
 use App\Http\Controllers\PerfilController;
 use App\Http\Controllers\SeguroController;
 use Illuminate\Support\Facades\Route;
@@ -61,3 +62,8 @@ Route::get('/seguros/eliminar/{id}', [SeguroController::class, 'destroy'] )->mid
 
 // Rutas para Pacientes queriendo ver Doctores
 Route::get('/doctores', [DoctoresController::class, 'index'])->name('doctores.index')->middleware(['auth', 'rol.admin:negar']);
+Route::get('/doctores/agendar/{id}', [DoctoresController::class, 'shedule'])->middleware(['auth', 'rol.admin:negar']);
+
+// Rutas para Doctores queriendo ver Pacientes
+Route::get('/pacientes', [PacientesController::class, 'index'])->name('pacientes.index')->middleware(['auth', 'rol.admin:negar']);
+Route::get('/pacientes/agendar/{id}', [PacientesController::class, 'shedule'])->middleware(['auth', 'rol.admin:negar']);

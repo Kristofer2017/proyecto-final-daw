@@ -16,7 +16,7 @@
                 <select id="paciente_id" name="paciente_id" class="form-select">
                     @foreach($pacientes as $paciente)
                         @if($paciente->usuario['activo'] == 'Y')
-                            <option value="{{ $paciente->paciente_id }}">{{ $paciente->usuario['nombre'] }}</option>
+                            <option {{ $id == $paciente->paciente_id ? 'selected' : '' }} value="{{ $paciente->paciente_id }}">{{ $paciente->usuario['nombre'] }}</option>
                         @endif
                     @endforeach
                 </select>

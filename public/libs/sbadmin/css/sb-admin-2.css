@@ -51,6 +51,12 @@ table thead th:last-child {
   text-align: center;
 }
 
+input#fecha_programada {
+    display: inline;
+    width: 12rem;
+    margin-left: 1rem;
+}
+
 .sidebar .sidebar-brand {
   height: 5.5rem;
   text-decoration: none;
