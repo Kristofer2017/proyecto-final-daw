@@ -73,5 +73,11 @@ class PacientesSeeder extends Seeder
             'usuario_id' => 10
         ]);
 
+        PerfilPaciente::create([
+            'fecha_nacimiento' => '2001-05-17',
+            'telefono' => '6482-1641',
+            'usuario_id' => 21
+        ]);
+
     }
 }

@@ -18,4 +18,9 @@ class DoctoresController extends Controller
         $doctores = $this->doctorModel->obtenerTodos();
         return view('doctores.doctores', ['doctores' => $doctores]);
     }
+
+    public function shedule(string $id) {
+        $doctores = $this->doctorModel->obtenerTodos();
+        return view ('doctores.agendar', ['id' => $id, 'doctores' => $doctores]);
+    }
 }

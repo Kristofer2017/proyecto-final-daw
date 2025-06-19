@@ -51,7 +51,12 @@ class CitaController extends Controller
     public function store(Request $request)
     {
         try {
-            $fecha_programada = Carbon::parse($request->fecha_programada);
+            if($request->fecha_programada == null) {
+                return redirect()->back()->with('error', 'Debes seleccionar una fecha del calendario');
+            } else {
+                $fecha_programada = Carbon::parse($request->fecha_programada);
+            }
+            
             
             if($this->esDoctor) {
                 $doctor_id = Auth::user()->perfilDoctor->doctor_id;
@@ -72,7 +77,7 @@ class CitaController extends Controller
             $cita->doctor_id = $doctor_id;
             $cita->paciente_id = $paciente_id;
             $cita->fecha_programada = $fecha_programada;
-            $cita->notas = $request->notas;
+            $cita->notas = $request->notas ?? '(sin comentario)';
 
             $this->citaModel->crear($cita);
             

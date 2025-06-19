@@ -9,14 +9,14 @@
         <h6 class="m-0 font-weight-bold text-primary">Agendar nueva cita</h6>
     </div>
     <div class="card-body">
-        <form action="/citas/guardar" method="post" class="form-container">
+        <form action="/citas/guardar" method="post" class="form-container" id="">
             @csrf
             <div class="mb-3">
-                <label for="paciente_id" class="form-label">Seleccionar el paciente</label>
-                <select id="paciente_id" name="paciente_id" class="form-select">
-                    @foreach($pacientes as $paciente)
-                        @if($paciente->usuario['activo'] == 'Y')
-                            <option value="{{ $paciente->paciente_id }}">{{ $paciente->usuario['nombre'] }}</option>
+                <label for="doctor_id" class="form-label">Seleccionar el doctor</label>
+                <select id="doctor_id" name="doctor_id" class="form-select">
+                    @foreach($doctores as $doctor)
+                        @if($doctor->usuario['activo'] == 'Y')
+                            <option {{ $id == $doctor->doctor_id ? 'selected' : '' }} value="{{ $doctor->doctor_id }}">{{ $doctor->usuario['nombre'] }}</option>
                         @endif
                     @endforeach
                 </select>
@@ -27,9 +27,9 @@
             </div>
             <div class="mb-3">
                 <label for="nombre" class="form-label">Notas adicionales</label>
-                <textarea class="form-control" name="notas" id="notas" placeholder="Si deseas dejar notas adicionales al paciente, puedes hacerlo aquí."></textarea>
+                <textarea class="form-control" name="notas" id="notas" placeholder="Si deseas dejar notas adicionales al doctor, puedes hacerlo aquí."></textarea>
             </div>
-            <a href="/citas" class="btn btn-danger btn-icon-split mr-2">
+            <a href="/doctores" class="btn btn-danger btn-icon-split mr-2">
                 <span class="icon text-white-50"><i class="fa-solid fa-xmark"></i></span>
                 <span class="text">Cancelar</span>
             </a>

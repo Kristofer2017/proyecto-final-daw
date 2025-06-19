@@ -16,7 +16,7 @@
                 <select id="paciente_id" name="paciente_id" class="form-select">
                     @foreach($pacientes as $paciente)
                         @if($paciente->usuario['activo'] == 'Y')
-                            <option value="{{ $paciente->paciente_id }}">{{ $paciente->usuario['nombre'] }}</option>
+                            <option {{ $id == $paciente->paciente_id ? 'selected' : '' }} value="{{ $paciente->paciente_id }}">{{ $paciente->usuario['nombre'] }}</option>
                         @endif
                     @endforeach
                 </select>
@@ -29,7 +29,7 @@
                 <label for="nombre" class="form-label">Notas adicionales</label>
                 <textarea class="form-control" name="notas" id="notas" placeholder="Si deseas dejar notas adicionales al paciente, puedes hacerlo aquí."></textarea>
             </div>
-            <a href="/citas" class="btn btn-danger btn-icon-split mr-2">
+            <a href="/pacientes" class="btn btn-danger btn-icon-split mr-2">
                 <span class="icon text-white-50"><i class="fa-solid fa-xmark"></i></span>
                 <span class="text">Cancelar</span>
             </a>

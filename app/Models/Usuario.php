@@ -36,7 +36,8 @@ class Usuario extends Authenticatable
     }
 
     public function actualizar(Usuario $usuario) {
-        return $usuario->save();
+        $usuario->save();
+        return $usuario;
     }
 
     public function eliminar(int $id) {
@@ -44,14 +45,17 @@ class Usuario extends Authenticatable
         return $usuario->delete();
     }
     
+    // Relación 1 a 1 que indica que éste usuario pertenece a un rol específico
     public function rol() {
         return $this->belongsTo(Rol::class, 'rol_id', 'rol_id');
     }
 
+    // Helper para determinar si un usuarion tiene determinado rol
     public function hasRole($rol) {
         return $this->rol->nombre == $rol;
     }
 
+    // También es relación uno a uno - la llave foránea está en el perfil del paciente, no en usuario
     public function perfilPaciente() {
         return $this->hasOne(PerfilPaciente::class, 'usuario_id');
     }

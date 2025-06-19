@@ -1,6 +1,5 @@
 <?php
 
-use App\Http\Middleware\RolMiddleware;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
@@ -13,7 +12,8 @@ return Application::configure(basePath: dirname(__DIR__))
     )
     ->withMiddleware(function (Middleware $middleware) {
         $middleware->alias([
-            'rol.admin' => \App\Http\Middleware\RolMiddleware::class
+            'admin' => \App\Http\Middleware\AdminMiddleware::class,
+            'doctor' => \App\Http\Middleware\DoctorMiddleware::class
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions) {
