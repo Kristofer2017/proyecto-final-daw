@@ -214,5 +214,15 @@ class UsuariosSeeder extends Seeder
             'rol_id' => 2
         ]);
 
+        // Usuario administrador
+        Usuario::create([
+            'fecha_creacion' => now(),
+            'activo' => 'Y',
+            'nombre' => 'Alex',
+            'apellido' => 'Valladares',
+            'email' => 'alex@gmail.com',
+            'password' => Hash::make('1234'),
+            'rol_id' => 3
+        ]);
     }
 }

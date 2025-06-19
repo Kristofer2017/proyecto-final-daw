@@ -33,7 +33,7 @@ class PerfilPaciente extends Model
         return $paciente->delete();
     }
     
-    // Relación 1:1 con paciente - un paciente solo puede tener un perfil de usuario
+    // Relación 1:1 con paciente - un paciente solo puede pertenecer a un perfil de usuario
     public function usuario() {
         return $this->belongsTo(Usuario::class, 'usuario_id');
     }

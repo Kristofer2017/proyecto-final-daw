@@ -2,6 +2,14 @@
 
 @section('title', 'Citas')
 
+@push('css')
+    <style>
+        .dataTable td {
+            vertical-align: middle;
+        }
+    </style>
+@endpush
+
 @section('content')
 
 <div class="card shadow mb-4">
@@ -32,15 +40,17 @@
                             <td>{{ htmlspecialchars($cita["notas"]) }}</td>
                             <td>{{ htmlspecialchars($cita["estado"]) }}</td>
 
-                            <td class="d-flex justify-content-center gap-3">
-                                <a class="btn btn-danger btn-icon-split {{ $cita->estado == 'Cancelada' ? 'disabled' : '' }}" onclick="confirmar({{ $cita['cita_id'] }})">
-                                    <span class="icon text-white-50"><i class="fa-solid fa-xmark"></i></span>
-                                    <span class="text">Cancelar</span>
-                                </a>
-                                <a href="/citas/editar/{{ $cita['cita_id'] }}" class="btn btn-warning btn-icon-split {{ $cita->estado == 'Cancelada' ? 'disabled' : '' }}">
-                                    <span class="icon text-white-50"><i class="fa-regular fa-calendar-check"></i></span>
-                                    <span class="text">Reagendar</span>
-                                </a>
+                            <td>
+                                <div class="d-flex justify-content-center gap-3">
+                                    <a class="btn btn-danger btn-icon-split {{ $cita->estado == 'Cancelada' ? 'disabled' : '' }}" onclick="confirmar({{ $cita['cita_id'] }})">
+                                        <span class="icon text-white-50"><i class="fa-solid fa-xmark"></i></span>
+                                        <span class="text">Cancelar</span>
+                                    </a>
+                                    <a href="/citas/editar/{{ $cita['cita_id'] }}" class="btn btn-warning btn-icon-split {{ $cita->estado == 'Cancelada' ? 'disabled' : '' }}">
+                                        <span class="icon text-white-50"><i class="fa-regular fa-calendar-check"></i></span>
+                                        <span class="text">Reagendar</span>
+                                    </a>
+                                </div>
                             </td>
                         </tr>
                     @endforeach
