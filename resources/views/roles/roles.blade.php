@@ -1,5 +1,15 @@
 @extends('layout.app')
+
 @section('title', 'Roles')
+
+@push('css')
+    <style>
+        .dataTable td {
+            vertical-align: middle;
+        }
+    </style>
+@endpush
+
 @section('content')
 
 <div class="card shadow mb-4">
@@ -28,7 +38,8 @@
                             <td> {{ $rol["activo"] == 'Y' ? 'Activo' : 'Inactivo' }} </td>
                             <td> {{ $rol["fecha_creacion"] }} </td>
                             
-                            <td class="d-flex justify-content-center gap-3">
+                            <td>
+                                <div class="d-flex justify-content-center gap-3">
                                 <a class="btn btn-danger btn-icon-split {{ $rol->nombre == "Doctor" || $rol->nombre == "Paciente" || $rol->nombre == "Administrador" ? 'disabled' : '' }}" role="button" aria-disabled="true" onclick="confirmar({{ $rol->rol_id }}, 'roles')">
                                     <span class="icon text-white-50"><i class="fa-solid fa-trash"></i></span>
                                     <span class="text">Eliminar</span>
@@ -37,6 +48,7 @@
                                     <span class="icon text-white-50"><i class="fa-solid fa-pen"></i></span>
                                     <span class="text">Editar</span>
                                 </a>
+                                </div>
                             </td>
                         </tr>
                     @endforeach

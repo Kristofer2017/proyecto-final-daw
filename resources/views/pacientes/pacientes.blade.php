@@ -38,8 +38,7 @@
                             <td>{{ htmlspecialchars($paciente->telefono) }}</td>
                             <td>{{ htmlspecialchars($paciente->fecha_nacimiento) }}</td>
                             
-
-                            <td class="d-flex justify-content-center gap-3 actions">
+                            <td>
                                 <a href="/pacientes/agendar/{{ $paciente->paciente_id }}" class="btn btn-info btn-icon-split">
                                     <span class="icon text-white-50"><i class="fa-regular fa-calendar-check"></i></span>
                                     <span class="text">Agendar</span>

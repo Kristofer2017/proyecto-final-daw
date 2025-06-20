@@ -14,6 +14,7 @@ class DatabaseSeeder extends Seeder
             PacientesSeeder::class,
             DoctoresSeeder::class,
             SegurosSeeder::class,
+            CitasSeeder::class,
         ]);
         
     }

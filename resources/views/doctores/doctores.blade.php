@@ -1,12 +1,16 @@
 @extends('layout.app')
 
 @push('css')
-<style>
-    .actions {
-        padding-left: 3rem !important;   
-        padding-right: 3rem !important;   
-    }
-</style>
+    <style>
+        .actions {
+            padding-left: 3rem !important;   
+            padding-right: 3rem !important;   
+        }
+
+        .dataTable td {
+            vertical-align: middle;
+        }
+    </style>
 @endpush
 
 @section('content')
@@ -39,7 +43,7 @@
                             <td>{{ htmlspecialchars($doctor->ubicacion) }}</td>
                             
 
-                            <td class="d-flex justify-content-center gap-3 actions">
+                            <td>
                                 <a href="/doctores/agendar/{{ $doctor->doctor_id }}" class="btn btn-info btn-icon-split">
                                     <span class="icon text-white-50"><i class="fa-regular fa-calendar-check"></i></span>
                                     <span class="text">Agendar</span>
